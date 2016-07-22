@@ -10,7 +10,7 @@ namespace CmdCalculator.Parsers
     public class AllExpressionsParser : IExpressionParser
     {
         private readonly IDictionary<IOperator, IExpressionParser> _operatorParsers;
-        private readonly IEnumerable<IOperator> _prioritizedOperators; 
+        private readonly IEnumerable<IOperator> _prioritizedOperators;
 
         public AllExpressionsParser(IDictionary<IOperator, IExpressionParser> operatorParsers)
         {

@@ -12,6 +12,7 @@ namespace CmdCalculator
             while (true)
             {
                 var input = Console.ReadLine();
+
                 if (input == "exit")
                 {
                     break;

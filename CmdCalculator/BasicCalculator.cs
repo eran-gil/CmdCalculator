@@ -41,7 +41,7 @@ namespace CmdCalculator
 
         public int Calculate(string input)
         {
-            var topExpression =_expressionParser.ParseExpression(input, null);
+            var topExpression = _expressionParser.ParseExpression(input, null);
             if (topExpression == null)
             {
                 var message = string.Format("The expression \"{0}\" could not be parsed. Please try again.", input);

@@ -7,7 +7,7 @@ using static System.Int32;
 
 namespace CmdCalculator.Parsers
 {
-    public class LiteralParser : IOperatorExpressionParser <IOperator>
+    public class LiteralParser : IOperatorExpressionParser<IOperator>
     {
         public LiteralParser(IOperator op)
         {
