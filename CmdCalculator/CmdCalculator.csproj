@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\Expressions\IUnaryExpression.cs" />
     <Compile Include="Interfaces\ICalculator.cs" />
     <Compile Include="Interfaces\Expressions\IExpression.cs" />
+    <Compile Include="Interfaces\Operators\IBracketsOperator.cs" />
     <Compile Include="Interfaces\Operators\IOperator.cs" />
     <Compile Include="Interfaces\Parsers\IOperatorExpressionParser.cs" />
     <Compile Include="Interfaces\Parsers\IExpressionParser.cs" />

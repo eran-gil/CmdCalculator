@@ -12,13 +12,12 @@ namespace CmdCalculator
     {
         private readonly IDictionary<IOperator, IExpressionParser> _operatorParsers;
         private readonly IExpressionParser _expressionParser;
-
-
+        
         public BasicCalculator()
         {
             _operatorParsers = new Dictionary<IOperator, IExpressionParser>();
 
-            AddUnaryOperatorParsers();
+            AddBracketOperatorParsers();
             AddBinaryOperatorParsers();
             AddLiteralParsers();
 
@@ -51,17 +50,17 @@ namespace CmdCalculator
             return result;
         }
 
-        private void AddUnaryOperatorParsers()
+        private void AddBracketOperatorParsers()
         {
-            IUnaryOperator op = new BracketsOperator(4);
-            IExpressionParser parser = new BracketsExpressionParser(op);
+            IBracketsOperator op = new BracketsOperator(4, '(', ')');
+            IOperatorExpressionParser<IBracketsOperator> parser = new BracketsExpressionParser(op);
             _operatorParsers.Add(op, parser);
         }
 
         private void AddBinaryOperatorParsers()
         {
             IBinaryOperator op = new PlusOperator(1);
-            IExpressionParser parser = new BinaryMathOpExpressionParser(op);
+            IOperatorExpressionParser<IBinaryOperator> parser = new BinaryMathOpExpressionParser(op);
             _operatorParsers.Add(op, parser);
 
             op = new MinusOperator(1);
@@ -80,9 +79,8 @@ namespace CmdCalculator
         private void AddLiteralParsers()
         {
             IOperator op = new LiteralOperator(3);
-            IExpressionParser parser = new LiteralParser(op);
+            IOperatorExpressionParser<IOperator> parser = new LiteralParser(op);
             _operatorParsers.Add(op, parser);
         }
-
     }
 }

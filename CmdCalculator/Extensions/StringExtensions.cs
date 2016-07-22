@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CmdCalculator.Extensions
 {
@@ -17,32 +16,15 @@ namespace CmdCalculator.Extensions
         public static IEnumerable<int> GetAllIndexesOf(this string str, string searchString)
         {
             var indexes = new List<int>();
-            var matchLength = searchString.Length;
-
-            var firstMatch = str.IndexOf(searchString, StringComparison.Ordinal);
-
-            if (firstMatch < 0)
+            for (var index = 0; ; index += searchString.Length)
             {
-                return null;
+                index = str.IndexOf(searchString, index, StringComparison.Ordinal);
+                if (index == -1)
+                {
+                    return indexes;
+                }
+                indexes.Add(index);
             }
-            indexes.Add(firstMatch);
-
-            if (firstMatch + matchLength == str.Length - 1)
-            {
-                return indexes;
-            }
-
-            var stringAfterMatch = str.Substring(firstMatch + matchLength);
-            var indexesAfterMatch = stringAfterMatch.GetAllIndexesOf(searchString);
-
-            if (indexesAfterMatch == null)
-            {
-                return indexes;
-            }
-
-            var updatedIndexesAfterMatch = indexesAfterMatch.Select(match => match + firstMatch + 1);
-            indexes.AddRange(updatedIndexesAfterMatch);
-            return indexes;
         }
 
 

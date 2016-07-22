@@ -6,6 +6,7 @@ namespace CmdCalculator.Operators
     public class LiteralOperator : IOperator
     {
         public Regex OpRegex { get; }
+
         public int Priority { get; }
 
         public LiteralOperator(int priority)

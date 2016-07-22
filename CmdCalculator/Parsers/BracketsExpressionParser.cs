@@ -6,12 +6,11 @@ using CmdCalculator.Interfaces.Parsers;
 
 namespace CmdCalculator.Parsers
 {
-    public class BracketsExpressionParser : IOperatorExpressionParser<IUnaryOperator>
+    public class BracketsExpressionParser : IOperatorExpressionParser<IBracketsOperator>
     {
-        public IUnaryOperator Op { get; }
+        public IBracketsOperator Op { get; }
 
-
-        public BracketsExpressionParser(IUnaryOperator op)
+        public BracketsExpressionParser(IBracketsOperator op)
         {
             Op = op;
         }
@@ -36,14 +35,7 @@ namespace CmdCalculator.Parsers
             {
                 var character = input[i];
 
-                if (character == '(')
-                {
-                    openBrackets++;
-                }
-                else if (character == ')')
-                {
-                    openBrackets--;
-                }
+                openBrackets = GetUpdatedBracketCount(character, openBrackets);
 
                 if (openBrackets == 0 && i < input.Length - 1)
                 {
@@ -52,6 +44,19 @@ namespace CmdCalculator.Parsers
             }
 
             return openBrackets == 0;
+        }
+
+        private int GetUpdatedBracketCount(char character, int openBrackets)
+        {
+            if (character == Op.OpeningBracket)
+            {
+                openBrackets++;
+            }
+            else if (character == Op.ClosingBracket)
+            {
+                openBrackets--;
+            }
+            return openBrackets;
         }
     }
 }
