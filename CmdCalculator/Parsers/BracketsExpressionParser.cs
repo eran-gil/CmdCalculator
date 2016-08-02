@@ -1,43 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
-using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
+using CmdCalculator.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class BracketsExpressionParser : IOperatorExpressionParser<IBracketsOperator>
+    public class BracketsExpressionParser<TOpen, TClose> : IOperatorExpressionParser
+        where TOpen : IToken
+        where TClose : IToken
     {
-        public IBracketsOperator Op { get; private set; }
-
-        public BracketsExpressionParser(IBracketsOperator op)
+        public BracketsExpressionParser(int priority)
         {
-            Op = op;
+            Priority = priority;
         }
 
-        public bool CanParseExpression(string input)
+        public int Priority { get; private set; }
+
+        public bool CanParseExpression(IEnumerable<IToken> input)
         {
-            return Op.OpRegex.Match(input).Success && IsWholeExpressionInBrackets(input);
+            return IsWholeExpressionInBrackets(input.ToList());
         }
 
-        public IExpression ParseExpression(string input, Func<string, IExpression> operandParser)
+        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
         {
-            var innerExpressionStr = input.Substring(1, input.Length - 2);
+            var innerExpressionStr = input.Skip(1).ToList();
+            innerExpressionStr.RemoveAt(innerExpressionStr.Count - 1);
             var innerExpression = operandParser(innerExpressionStr);
-            var bracketsExpression = new UnaryOpExpression(innerExpression, Op);
+            var bracketsExpression = new BracketOpExpression(innerExpression, Priority);
             return bracketsExpression;
         }
 
-        private bool IsWholeExpressionInBrackets(string input)
+        private bool IsWholeExpressionInBrackets(List<IToken> input)
         {
             var openBrackets = 0;
-            for (var i = 0; i < input.Length; i++)
+            for (var i = 0; i < input.Count; i++)
             {
                 var character = input[i];
 
                 openBrackets = GetUpdatedBracketCount(character, openBrackets);
 
-                if (openBrackets == 0 && i < input.Length - 1)
+                if (openBrackets == 0 && i < input.Count - 1)
                 {
                     return false;
                 }
@@ -46,13 +52,13 @@ namespace CmdCalculator.Parsers
             return openBrackets == 0;
         }
 
-        private int GetUpdatedBracketCount(char character, int openBrackets)
+        private int GetUpdatedBracketCount(IToken character, int openBrackets)
         {
-            if (character == Op.OpeningBracket)
+            if (character is TOpen)
             {
                 openBrackets++;
             }
-            else if (character == Op.ClosingBracket)
+            else if (character is TClose)
             {
                 openBrackets--;
             }

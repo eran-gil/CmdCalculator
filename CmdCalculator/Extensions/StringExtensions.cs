@@ -1,29 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using CmdCalculator.Tokens;
 
 namespace CmdCalculator.Extensions
 {
     public static class StringExtensions
     {
-        public static IEnumerable<string> SplitAtLocation(this string str, int location)
+        public static IEnumerable<IToken[]> SplitAtLocation(this IEnumerable<IToken> str, int location)
         {
-            var part1 = str.Substring(0, location);
-            var part2 = str.Substring(location + 1);
-            var parts = new List<string> { part1, part2 };
+            var part1 = str.Take(location).ToArray();
+            var part2 = str.Skip(location + 1).ToArray();
+            var parts = new List<IToken[]> { part1, part2 };
             return parts;
         }
 
-        public static IEnumerable<int> GetAllIndexesOf(this string str, string searchString)
+        public static IEnumerable<int> GetAllIndexesOf<T>(this IEnumerable<IToken> str)
         {
-            var indexes = new List<int>();
-            for (var index = 0; ; index += searchString.Length)
+            int count = 0;
+            foreach (var token in str)
             {
-                index = str.IndexOf(searchString, index, StringComparison.Ordinal);
-                if (index == -1)
+                if (token is T)
                 {
-                    return indexes;
+                    yield return count;
                 }
-                indexes.Add(index);
+                count++;
             }
         }
 

@@ -1,8 +1,6 @@
-﻿using CmdCalculator.Interfaces.Operators;
-
-namespace CmdCalculator.Interfaces.Expressions
+﻿namespace CmdCalculator.Interfaces.Expressions
 {
-    public interface IBinaryOpExpression : IOperatorExpression<IBinaryOperator>
+    public interface IBinaryOpExpression : IOperatorExpression
     {
         IExpression FirstOperand { get; }
 

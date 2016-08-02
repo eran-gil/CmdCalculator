@@ -3,9 +3,9 @@
 namespace CmdCalculator.Tokens
 {
     [DebuggerDisplay("{Value}")]
-    class NumberToken : IToken
+    class LiteralToken : IToken
     {
-        public NumberToken(string value)
+        public LiteralToken(string value)
         {
             Value = value;
         }

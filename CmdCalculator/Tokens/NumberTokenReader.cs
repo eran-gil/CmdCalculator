@@ -17,7 +17,7 @@ namespace CmdCalculator.Tokens
                 builder.Append(reader.Read());
             }
 
-            return new NumberToken(builder.ToString());
+            return new LiteralToken(builder.ToString());
         }
     }
 }

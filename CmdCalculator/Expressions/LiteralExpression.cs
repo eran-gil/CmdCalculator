@@ -1,19 +1,20 @@
-﻿using CmdCalculator.Interfaces.Expressions;
+﻿using System.Diagnostics;
+using CmdCalculator.Interfaces.Expressions;
 
 namespace CmdCalculator.Expressions
 {
     public class LiteralExpression : IExpression
     {
-        private readonly int _value;
+        private readonly string _value;
 
-        public LiteralExpression(int value)
+        public LiteralExpression(string value)
         {
             _value = value;
         }
 
-        public int Evaluate()
+        public override string ToString()
         {
-            return _value;
+            return "'" + _value + "'";
         }
     }
 }
