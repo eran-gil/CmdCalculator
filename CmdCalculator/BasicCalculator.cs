@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using CmdCalculator.Evaluations;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
+using CmdCalculator.Interfaces.Evaluations;
 using CmdCalculator.Interfaces.Parsers;
+using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Parsers;
-using CmdCalculator.Tokens;
 
 namespace CmdCalculator
 {
@@ -13,10 +14,10 @@ namespace CmdCalculator
     {
         private readonly IExpressionParser _expressionParser;
         private readonly ITokenizer<TInput> _inputTokenizer;
-        private readonly IExpressionVisitor<TOutput> _visitor;
+        private readonly IEvaluationVisitor<TOutput> _visitor;
 
        
-        public BasicCalculator(ITokenizer<TInput> inputTokenizer, IExpressionVisitor<TOutput> resultEvaluator, IEnumerable<IExpressionParser> operatorParsers)
+        public BasicCalculator(ITokenizer<TInput> inputTokenizer, IEvaluationVisitor<TOutput> resultEvaluator, IEnumerable<IExpressionParser> operatorParsers)
         {
             _inputTokenizer = inputTokenizer;
             _visitor = resultEvaluator;

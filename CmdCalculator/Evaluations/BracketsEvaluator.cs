@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Evaluations
 {
-    class BracketsEvaluator<T> : UnaryExpressionEvaluator<BracketOpExpression, T>
+    class BracketsEvaluator<T> : UnaryExpressionEvaluatorBase<BracketOpExpression, T>
     {
         protected override T Evaluate(T innerExpression)
         {

@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
-using CmdCalculator.Tokens;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CmdCalculator.Interfaces.Evaluations;
 
 namespace CmdCalculator.Evaluations
 {
@@ -13,7 +14,7 @@ namespace CmdCalculator.Evaluations
                 new IntegerSubstractionEvaluator(),
                 new IntegerMultiplicationEvaluator(),
                 new IntegerDivisionEvaluator(),
-                new LiteralIntegerExpressionEvaluator()
+                new IntegerExpressionEvaluator()
             };
         }
     }

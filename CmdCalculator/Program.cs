@@ -2,7 +2,8 @@
 using CmdCalculator.Evaluations;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
-using CmdCalculator.Tokens;
+using CmdCalculator.Parsers;
+using CmdCalculator.Tokenization;
 
 namespace CmdCalculator
 {
@@ -17,7 +18,7 @@ namespace CmdCalculator
                         new CharTokenParsersProvider()
                     ),
                     new DefaultExpressionParsersProvider(), 
-                    new ExpressionVisitorFactory<int>(
+                    new EvaluationVisitorFactory<int>(
                         new IntegerEvaluatorProvider()
                     )
                 );

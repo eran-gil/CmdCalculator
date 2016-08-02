@@ -6,7 +6,7 @@ using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
-using CmdCalculator.Tokens;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {

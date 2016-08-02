@@ -1,8 +1,8 @@
-﻿using CmdCalculator.Tokens;
+﻿using CmdCalculator.Tokenization.Tokens;
 
 namespace CmdCalculator.Evaluations
 {
-    class IntegerSubstractionEvaluator : BinaryExpressionEvaluator<SubstractionToken, int>
+    class IntegerSubstractionEvaluator : BinaryExpressionEvaluatorBase<SubstractionToken, int>
     {
         protected override int Evaluate(int left, int right)
         {

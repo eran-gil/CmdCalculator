@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
-using CmdCalculator.Tokens;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {

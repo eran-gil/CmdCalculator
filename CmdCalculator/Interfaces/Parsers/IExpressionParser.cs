@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CmdCalculator.Interfaces.Expressions;
-using CmdCalculator.Tokens;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Interfaces.Parsers
 {
