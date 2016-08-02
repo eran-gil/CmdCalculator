@@ -3,18 +3,24 @@ using CmdCalculator.Interfaces.Expressions;
 
 namespace CmdCalculator.Expressions
 {
-    public class LiteralExpression : IExpression
+    public interface ILiteralExpression : IExpression
     {
-        private readonly string _value;
+        string Value { get; set; }
+    }
+
+    public class LiteralExpression : ILiteralExpression
+    {
 
         public LiteralExpression(string value)
         {
-            _value = value;
+            Value = value;
         }
 
         public override string ToString()
         {
-            return "'" + _value + "'";
+            return "'" + Value + "'";
         }
+
+        public string Value { get; set; }
     }
 }

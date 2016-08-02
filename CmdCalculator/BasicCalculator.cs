@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CmdCalculator.Evaluations;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Parsers;
@@ -13,6 +14,7 @@ namespace CmdCalculator
         private List<IExpressionParser> _operatorParsers;
         private readonly IExpressionParser _expressionParser;
         private StringTokenizer _inputTokenizer;
+        private IExpressionVisitor<int> _visitor;
 
         public BasicCalculator()
             : this(CreateDefaultParsers())
@@ -29,7 +31,7 @@ namespace CmdCalculator
                 new OperatorTokenReader<OpenBracketsToken>("("), new OperatorTokenReader<CloseBracketsToken>(")"),
                 new NumberTokenReader());
             _operatorParsers = operatorParsers;
-
+            _visitor = new CalculatorExpressionVisitor<int>(new BracketsEvaluator<int>(),new IntegerAdditionEvaluator(),new IntegerDivisionEvaluator(),new LiteralIntegerExpressionEvaluator(), new IntegerMultiplicationEvaluator(), new IntegerSubstractionEvaluator());
             if (topParser == null)
             {
                 _expressionParser = new AllExpressionsParser(_operatorParsers);
@@ -50,9 +52,7 @@ namespace CmdCalculator
                 throw new CalculatorException(message);
             }
 
-            throw new NotImplementedException();
-            //var result = topExpression.Evaluate();
-            //return result;
+            return _visitor.Visit(topExpression);
         }
 
         private static List<IExpressionParser> CreateDefaultParsers()

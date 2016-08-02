@@ -44,11 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicCalculator.cs" />
+    <Compile Include="Evaluations\BinaryExpressionEvaluator.cs" />
+    <Compile Include="Evaluations\CalculatorExpressionVisitor.cs" />
+    <Compile Include="Evaluations\IExpressionVisitor.cs" />
+    <Compile Include="Evaluations\LiteralExpressionEvaluator.cs" />
+    <Compile Include="Evaluations\MissingEvaluatorException.cs" />
+    <Compile Include="Evaluations\UnaryExpressionEvaluator.cs" />
     <Compile Include="Exceptions\CalculatorException.cs" />
     <Compile Include="Expressions\BinaryOpExpression.cs" />
     <Compile Include="Expressions\LiteralExpression.cs" />
     <Compile Include="Expressions\BracketOpExpression.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Evaluations\IExpressionEvaluator.cs" />
     <Compile Include="Interfaces\Expressions\IBinaryOpExpression.cs" />
     <Compile Include="Interfaces\Expressions\IOperatorExpression.cs" />
     <Compile Include="Interfaces\Expressions\IUnaryExpression.cs" />
