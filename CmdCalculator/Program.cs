@@ -1,5 +1,6 @@
 ﻿using System;
 using CmdCalculator.Exceptions;
+using CmdCalculator.Tokens;
 
 namespace CmdCalculator
 {
@@ -12,7 +13,11 @@ namespace CmdCalculator
             while (true)
             {
                 var input = Console.ReadLine();
-
+                var tokenizedInput = new StringTokenizer(new SpaceTokenReader(),
+                    new OperatorTokenReader<AdditionToken>("+"), new OperatorTokenReader<SubstractionToken>("-"),
+                    new OperatorTokenReader<MultiplicationToken>("*"), new OperatorTokenReader<DivisionToken>("/"),
+                    new OperatorTokenReader<OpenBracketsToken>("("), new OperatorTokenReader<CloseBracketsToken>(")"),
+                    new NumberTokenReader()).Tokenize(input);
                 if (input == "exit")
                 {
                     break;
