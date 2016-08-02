@@ -1,11 +1,11 @@
 ﻿namespace CmdCalculator.Tokens
 {
-    class OperatorTokenReader<TOperator> : ITokenReader<char>
+    class OperatorTokenParser<TOperator> : ITokenParser<char>
         where TOperator : IToken, new()
     {
         private string _operator;
 
-        public OperatorTokenReader(string op)
+        public OperatorTokenParser(string op)
         {
             _operator = op;
         }

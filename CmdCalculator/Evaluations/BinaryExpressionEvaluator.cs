@@ -23,36 +23,4 @@ namespace CmdCalculator.Evaluations
 
         protected abstract TRes Evaluate(TRes left, TRes right);
     }
-
-    class IntegerAdditionEvaluator : BinaryExpressionEvaluator<AdditionToken,int>
-    {
-        protected override int Evaluate(int left, int right)
-        {
-            return left + right;
-        }
-    }
-
-    class IntegerSubstractionEvaluator : BinaryExpressionEvaluator<SubstractionToken, int>
-    {
-        protected override int Evaluate(int left, int right)
-        {
-            return left - right;
-        }
-    }
-
-    class IntegerMultiplicationEvaluator : BinaryExpressionEvaluator<MultiplicationToken, int>
-    {
-        protected override int Evaluate(int left, int right)
-        {
-            return left * right;
-        }
-    }
-
-    class IntegerDivisionEvaluator : BinaryExpressionEvaluator<DivisionToken, int>
-    {
-        protected override int Evaluate(int left, int right)
-        {
-            return left / right;
-        }
-    }
 }

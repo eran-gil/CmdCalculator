@@ -10,11 +10,17 @@
             _str = str;
             _count = 0;
         }
+
+        public char EmptyValue
+        {
+            get { return '\0'; }
+        }
+
         public char Peek()
         {
             var limit = GetReadLimit(1);
             if (limit == 0)
-                return '\0';
+                return EmptyValue;
             return _str[_count];
         }
 
@@ -31,7 +37,7 @@
         public char Read()
         {
             var value = Peek();
-            if (value != '\0')
+            if (value != EmptyValue)
             {
                 _count++;
             }

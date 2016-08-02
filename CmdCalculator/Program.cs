@@ -1,5 +1,7 @@
 ﻿using System;
+using CmdCalculator.Evaluations;
 using CmdCalculator.Exceptions;
+using CmdCalculator.Interfaces;
 using CmdCalculator.Tokens;
 
 namespace CmdCalculator
@@ -8,16 +10,23 @@ namespace CmdCalculator
     {
         static void Main()
         {
-            var calculator = new BasicCalculator();
+            var calculatorFactory =
+                new BasicCalcualtorFactory<string, int>(
+                    new BasicTokenizerFactory<string, char>(
+                        new StringInputReaderFactory(),
+                        new CharTokenParsersProvider()
+                    ),
+                    new DefaultExpressionParsersProvider(), 
+                    new ExpressionVisitorFactory<int>(
+                        new IntegerEvaluatorProvider()
+                    )
+                );
+
+            var calculator = calculatorFactory.CreateCalculator();
 
             while (true)
             {
                 var input = Console.ReadLine();
-                var tokenizedInput = new StringTokenizer(new SpaceTokenReader(),
-                    new OperatorTokenReader<AdditionToken>("+"), new OperatorTokenReader<SubstractionToken>("-"),
-                    new OperatorTokenReader<MultiplicationToken>("*"), new OperatorTokenReader<DivisionToken>("/"),
-                    new OperatorTokenReader<OpenBracketsToken>("("), new OperatorTokenReader<CloseBracketsToken>(")"),
-                    new NumberTokenReader()).Tokenize(input);
                 if (input == "exit")
                 {
                     break;

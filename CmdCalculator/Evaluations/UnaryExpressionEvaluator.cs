@@ -1,5 +1,4 @@
 ﻿using System;
-using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 
 namespace CmdCalculator.Evaluations
@@ -20,13 +19,5 @@ namespace CmdCalculator.Evaluations
         }
 
         protected abstract TRes Evaluate(TRes innerExpression);
-    }
-
-    class BracketsEvaluator<T> : UnaryExpressionEvaluator<BracketOpExpression, T>
-    {
-        protected override T Evaluate(T innerExpression)
-        {
-            return innerExpression;
-        }
     }
 }

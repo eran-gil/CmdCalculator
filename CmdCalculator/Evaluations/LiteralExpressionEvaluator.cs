@@ -20,12 +20,4 @@ namespace CmdCalculator.Evaluations
 
         protected abstract TRes Parse(string value);
     }
-
-    class LiteralIntegerExpressionEvaluator : LiteralExpressionEvaluator<LiteralExpression, int>
-    {
-        protected override int Parse(string value)
-        {
-            return int.Parse(value);
-        }
-    }
 }

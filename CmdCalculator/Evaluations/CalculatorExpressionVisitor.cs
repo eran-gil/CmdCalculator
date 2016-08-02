@@ -9,7 +9,7 @@ namespace CmdCalculator.Evaluations
     {
         private readonly Dictionary<Type, IExpressionEvaluator<T>> _evaluatorToType;
 
-        public CalculatorExpressionVisitor(params IExpressionEvaluator<T>[] evaluators)
+        public CalculatorExpressionVisitor(IEnumerable<IExpressionEvaluator<T>> evaluators)
         {
             _evaluatorToType = evaluators.ToDictionary(x => x.GetSupportedExpressionType());
         }

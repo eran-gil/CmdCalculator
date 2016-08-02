@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Tokens
 {
-    class NumberTokenReader : ITokenReader<char>
+    class NumberTokenParser : ITokenParser<char>
     {
         public bool CanRead(IInputPeeker<char> peeker)
         {

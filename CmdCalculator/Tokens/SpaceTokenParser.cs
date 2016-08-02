@@ -1,6 +1,6 @@
 ﻿namespace CmdCalculator.Tokens
 {
-    class SpaceTokenReader : ITokenReader<char>
+    class SpaceTokenParser : ITokenParser<char>
     {
         public bool CanRead(IInputPeeker<char> peeker)
         {
