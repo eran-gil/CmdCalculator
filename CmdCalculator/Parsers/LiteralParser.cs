@@ -3,7 +3,6 @@ using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
-using static System.Int32;
 
 namespace CmdCalculator.Parsers
 {
@@ -21,10 +20,10 @@ namespace CmdCalculator.Parsers
 
         public IExpression ParseExpression(string input, Func<string, IExpression> innerExpressionParser)
         {
-            var literalValue = Parse(input);
+            var literalValue = int.Parse(input);
             return new LiteralExpression(literalValue);
         }
 
-        public IOperator Op { get; }
+        public IOperator Op { get; private set; }
     }
 }

@@ -5,11 +5,11 @@ namespace CmdCalculator.Expressions
 {
     public class BinaryOpExpression : IBinaryOpExpression
     {
-        public IExpression FirstOperand { get; }
+        public IExpression FirstOperand { get; private set; }
 
-        public IExpression SecondOperand { get; }
+        public IExpression SecondOperand { get; private set; }
 
-        public IBinaryOperator Op { get; }
+        public IBinaryOperator Op { get; private set; }
 
         public BinaryOpExpression(IExpression firstOperand, IExpression secondOperand, IBinaryOperator op)
         {

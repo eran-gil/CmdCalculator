@@ -6,13 +6,13 @@ namespace CmdCalculator.Operators
 {
     public class BracketsOperator : IBracketsOperator
     {
-        public Regex OpRegex { get; }
+        public Regex OpRegex { get; private set; }
 
-        public int Priority { get; }
+        public int Priority { get; private set; }
 
-        public char OpeningBracket { get; }
+        public char OpeningBracket { get; private set; }
 
-        public char ClosingBracket { get; }
+        public char ClosingBracket { get; private set; }
 
         public BracketsOperator(int priority, char openingBracket, char closingBracket)
         {

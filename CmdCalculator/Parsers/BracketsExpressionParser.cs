@@ -8,7 +8,7 @@ namespace CmdCalculator.Parsers
 {
     public class BracketsExpressionParser : IOperatorExpressionParser<IBracketsOperator>
     {
-        public IBracketsOperator Op { get; }
+        public IBracketsOperator Op { get; private set; }
 
         public BracketsExpressionParser(IBracketsOperator op)
         {

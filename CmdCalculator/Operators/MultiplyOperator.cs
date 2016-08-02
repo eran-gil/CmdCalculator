@@ -6,11 +6,11 @@ namespace CmdCalculator.Operators
 {
     public class MultiplyOperator : IBinaryOperator
     {
-        public Regex OpRegex { get; }
+        public Regex OpRegex { get; private set; }
 
-        public int Priority { get; }
+        public int Priority { get; private set; }
 
-        public string OpString { get; }
+        public string OpString { get; private set; }
 
         public MultiplyOperator(int priority)
         {

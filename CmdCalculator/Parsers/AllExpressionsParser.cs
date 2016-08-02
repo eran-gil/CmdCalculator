@@ -16,8 +16,7 @@ namespace CmdCalculator.Parsers
         {
             _operatorParsers = operatorParsers;
             var operators = operatorParsers.Keys;
-            operators.ToList().Sort(ComparePriority);
-            _prioritizedOperators = operators;
+            _prioritizedOperators = operators.OrderBy(x => x.Priority).ToList();
         }
 
         public bool CanParseExpression(string input)
@@ -48,11 +47,5 @@ namespace CmdCalculator.Parsers
             }
             return null;
         }
-
-        private int ComparePriority(IOperator operator1, IOperator operator2)
-        {
-            return operator1.Priority - operator2.Priority;
-        }
-
     }
 }

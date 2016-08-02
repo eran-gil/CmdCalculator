@@ -11,7 +11,7 @@ namespace CmdCalculator.Parsers
 {
     public class BinaryMathOpExpressionParser : IOperatorExpressionParser<IBinaryOperator>
     {
-        public IBinaryOperator Op { get; }
+        public IBinaryOperator Op { get; private set; }
 
         public BinaryMathOpExpressionParser(IBinaryOperator op)
         {
