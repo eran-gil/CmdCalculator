@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using CmdCalculator.Interfaces.Expressions;
+﻿using CmdCalculator.Interfaces.Expressions;
 
 namespace CmdCalculator.Expressions
 {

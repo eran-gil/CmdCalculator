@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CmdCalculator.Evaluations;
+﻿using System.Collections.Generic;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Evaluations;

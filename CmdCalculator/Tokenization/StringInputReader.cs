@@ -4,7 +4,7 @@ namespace CmdCalculator.Tokenization
 {
     class StringInputReader : IInputReader<char>
     {
-        private string _str;
+        private readonly string _str;
         private int _count;
 
         public StringInputReader(string str)

@@ -5,7 +5,7 @@ namespace CmdCalculator.Tokenization
     class OperatorTokenParser<TOperator> : ITokenParser<char>
         where TOperator : IToken, new()
     {
-        private string _operator;
+        private readonly string _operator;
 
         public OperatorTokenParser(string op)
         {

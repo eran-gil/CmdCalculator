@@ -1,5 +1,4 @@
 ﻿using System;
-using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Evaluations;
 using CmdCalculator.Interfaces.Expressions;
 

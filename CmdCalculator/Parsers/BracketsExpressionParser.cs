@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
@@ -9,7 +8,7 @@ using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class BracketsExpressionParser<TOpen, TClose> : IOperatorExpressionParser
+    public class BracketsExpressionParser<TOpen, TClose> : IExpressionParser
         where TOpen : IToken
         where TClose : IToken
     {
@@ -22,7 +21,8 @@ namespace CmdCalculator.Parsers
 
         public bool CanParseExpression(IEnumerable<IToken> input)
         {
-            return IsWholeExpressionInBrackets(input.ToList());
+            var inputList = input as IList<IToken> ?? input.ToList();
+            return inputList.Count() > 2 && IsWholeExpressionInBrackets(inputList);
         }
 
         public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
@@ -34,7 +34,7 @@ namespace CmdCalculator.Parsers
             return bracketsExpression;
         }
 
-        private bool IsWholeExpressionInBrackets(List<IToken> input)
+        private bool IsWholeExpressionInBrackets(IList<IToken> input)
         {
             var openBrackets = 0;
             for (var i = 0; i < input.Count; i++)

@@ -13,7 +13,7 @@ namespace CmdCalculator.Parsers
 
         public AllExpressionsParser(IEnumerable<IExpressionParser> operatorParsers)
         {
-            _operatorParsers = operatorParsers.OrderBy(x=>x.Priority).ToList();
+            _operatorParsers = operatorParsers.OrderBy(x => x.Priority).ToList();
         }
 
         public bool CanParseExpression(IEnumerable<IToken> input)
@@ -50,6 +50,10 @@ namespace CmdCalculator.Parsers
                 return parsedExpression;
             }
             return null;
+            // Linq version:
+            // return _operatorParsers.Where(x => x.CanParseExpression(input))
+            //         .Select(x => x.ParseExpression(input, ParseExpression))
+            //         .FirstOrDefault(x => x != null);
         }
     }
 }

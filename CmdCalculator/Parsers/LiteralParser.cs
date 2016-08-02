@@ -9,7 +9,7 @@ using CmdCalculator.Tokenization.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class LiteralParser : IOperatorExpressionParser
+    public class LiteralParser : IExpressionParser
     {
         public LiteralParser(int priority)
         {

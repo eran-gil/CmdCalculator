@@ -1,7 +1,6 @@
 ﻿using System;
 using CmdCalculator.Evaluations;
 using CmdCalculator.Exceptions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Parsers;
 using CmdCalculator.Tokenization;
 

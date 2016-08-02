@@ -23,13 +23,13 @@ namespace CmdCalculator.Parsers
 
         private static void AddBracketOperatorParsers(List<IExpressionParser> operatorParsers)
         {
-            IOperatorExpressionParser parser = new BracketsExpressionParser<OpenBracketsToken, CloseBracketsToken>(4);
+            var parser = new BracketsExpressionParser<OpenBracketsToken, CloseBracketsToken>(4);
             operatorParsers.Add(parser);
         }
 
         private static void AddBinaryOperatorParsers(List<IExpressionParser> operatorParsers)
         {
-            IOperatorExpressionParser parser = new BinaryMathOpExpressionParser<AdditionToken>(1);
+            IExpressionParser parser = new BinaryMathOpExpressionParser<AdditionToken>(1);
             operatorParsers.Add(parser);
 
             parser = new BinaryMathOpExpressionParser<SubstractionToken>(1);
@@ -44,7 +44,7 @@ namespace CmdCalculator.Parsers
 
         private static void AddLiteralParsers(List<IExpressionParser> operatorParsers)
         {
-            IOperatorExpressionParser parser = new LiteralParser(3);
+            var parser = new LiteralParser(3);
             operatorParsers.Add(parser);
         }
     }

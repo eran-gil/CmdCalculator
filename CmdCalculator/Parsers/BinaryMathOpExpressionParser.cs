@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
 using CmdCalculator.Interfaces.Expressions;
@@ -10,7 +9,7 @@ using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class BinaryMathOpExpressionParser<T> : IOperatorExpressionParser
+    public class BinaryMathOpExpressionParser<T> : IExpressionParser
         where T : IToken
     {
 

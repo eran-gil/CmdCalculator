@@ -76,7 +76,6 @@
     <Compile Include="Interfaces\ICalculator.cs" />
     <Compile Include="Interfaces\Expressions\IExpression.cs" />
     <Compile Include="Interfaces\Parsers\IExpressionParsersProvider.cs" />
-    <Compile Include="Interfaces\Parsers\IOperatorExpressionParser.cs" />
     <Compile Include="Interfaces\Parsers\IExpressionParser.cs" />
     <Compile Include="Parsers\AllExpressionsParser.cs" />
     <Compile Include="Parsers\BinaryMathOpExpressionParser.cs" />
