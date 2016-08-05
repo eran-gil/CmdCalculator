@@ -2,39 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Interfaces.Expressions;
-using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {
     public class AllExpressionsParser : IExpressionParser
     {
-        private readonly IDictionary<IOperator, IExpressionParser> _operatorParsers;
-        private readonly IEnumerable<IOperator> _prioritizedOperators;
+        private readonly List<IExpressionParser> _operatorParsers;
 
-        public AllExpressionsParser(IDictionary<IOperator, IExpressionParser> operatorParsers)
+        public AllExpressionsParser(IEnumerable<IExpressionParser> operatorParsers)
         {
-            _operatorParsers = operatorParsers;
-            var operators = operatorParsers.Keys;
-            operators.ToList().Sort(ComparePriority);
-            _prioritizedOperators = operators;
+            _operatorParsers = operatorParsers.OrderBy(x => x.Priority).ToList();
         }
 
-        public bool CanParseExpression(string input)
+        public bool CanParseExpression(IEnumerable<IToken> input)
         {
             return true;
         }
 
-        public IExpression ParseExpression(string input, Func<string, IExpression> innerExpressionParser)
+        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser)
         {
             return ParseExpression(input);
         }
 
-        private IExpression ParseExpression(string input)
+        public int Priority
         {
-            foreach (var op in _prioritizedOperators)
+            get
             {
-                var operatorParser = _operatorParsers[op];
+                return int.MaxValue;
+            }
+        }
+
+        private IExpression ParseExpression(IEnumerable<IToken> input)
+        {
+            foreach (var operatorParser in _operatorParsers)
+            {
                 if (!operatorParser.CanParseExpression(input))
                 {
                     continue;
@@ -47,12 +50,10 @@ namespace CmdCalculator.Parsers
                 return parsedExpression;
             }
             return null;
+            // Linq version:
+            // return _operatorParsers.Where(x => x.CanParseExpression(input))
+            //         .Select(x => x.ParseExpression(input, ParseExpression))
+            //         .FirstOrDefault(x => x != null);
         }
-
-        private int ComparePriority(IOperator operator1, IOperator operator2)
-        {
-            return operator1.Priority - operator2.Priority;
-        }
-
     }
 }

@@ -2,18 +2,19 @@
 
 namespace CmdCalculator.Expressions
 {
-    public class LiteralExpression : IExpression
+    public class LiteralExpression : ILiteralExpression
     {
-        private readonly int _value;
 
-        public LiteralExpression(int value)
+        public LiteralExpression(string value)
         {
-            _value = value;
+            Value = value;
         }
 
-        public int Evaluate()
+        public override string ToString()
         {
-            return _value;
+            return "'" + Value + "'";
         }
+
+        public string Value { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace CmdCalculator.Interfaces
 {
-    public interface ICalculator
+    public interface ICalculator<in TInput, out TOutput>
     {
-        int Calculate(string input);
+        TOutput Calculate(TInput input);
     }
 }

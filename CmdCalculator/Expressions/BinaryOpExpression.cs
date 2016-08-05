@@ -1,26 +1,23 @@
 ﻿using CmdCalculator.Interfaces.Expressions;
-using CmdCalculator.Interfaces.Operators;
 
 namespace CmdCalculator.Expressions
 {
-    public class BinaryOpExpression : IBinaryOpExpression
+    public class BinaryOpExpression<T> : IBinaryOpExpression
     {
-        public IExpression FirstOperand { get; }
+        public IExpression FirstOperand { get; private set; }
+        public IExpression SecondOperand { get; private set; }
+        public int Priority { get; private set; }
 
-        public IExpression SecondOperand { get; }
-
-        public IBinaryOperator Op { get; }
-
-        public BinaryOpExpression(IExpression firstOperand, IExpression secondOperand, IBinaryOperator op)
+        public BinaryOpExpression(IExpression firstOperand, IExpression secondOperand, int priority)
         {
             FirstOperand = firstOperand;
             SecondOperand = secondOperand;
-            Op = op;
+            Priority = priority;
         }
 
-        public int Evaluate()
+        public override string ToString()
         {
-            return Op.GetResult(FirstOperand, SecondOperand);
+            return string.Format("{0}({1},{2})",typeof (T).Name,FirstOperand,SecondOperand);
         }
     }
 }
