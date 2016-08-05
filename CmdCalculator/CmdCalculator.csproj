@@ -68,6 +68,13 @@
     <Compile Include="Extensions\TokenCollectionExtensions.cs" />
     <Compile Include="Interfaces\Evaluations\IExpressionEvaluator.cs" />
     <Compile Include="BasicCalcualtorFactory.cs" />
+    <Compile Include="Interfaces\Operators\IOperator.cs" />
+    <Compile Include="Operators\AdditionOperator.cs" />
+    <Compile Include="Operators\ClosingBracketOperator.cs" />
+    <Compile Include="Operators\DivisionOperator.cs" />
+    <Compile Include="Operators\MultiplicationOperator.cs" />
+    <Compile Include="Operators\OpeningBracketOperator.cs" />
+    <Compile Include="Operators\SubtractionOperator.cs" />
     <Compile Include="Parsers\DefaultExpressionParsersProvider.cs" />
     <Compile Include="Interfaces\Expressions\IBinaryOpExpression.cs" />
     <Compile Include="Interfaces\Expressions\IOperatorExpression.cs" />
@@ -83,12 +90,11 @@
     <Compile Include="Parsers\LiteralParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tokenization\Tokens\AdditionToken.cs" />
     <Compile Include="Tokenization\BasicTokenizer.cs" />
     <Compile Include="Tokenization\BasicTokenizerFactory.cs" />
     <Compile Include="Tokenization\CharTokenParsersProvider.cs" />
+    <Compile Include="Tokenization\Tokens\BinaryMathOpToken.cs" />
     <Compile Include="Tokenization\Tokens\CloseBracketsToken.cs" />
-    <Compile Include="Tokenization\Tokens\DivisionToken.cs" />
     <Compile Include="Interfaces\Tokens\IInputPeeker.cs" />
     <Compile Include="Interfaces\Tokens\IInputReader.cs" />
     <Compile Include="Interfaces\Tokens\IInputReaderFactory.cs" />
@@ -98,7 +104,7 @@
     <Compile Include="Interfaces\Tokens\ITokenParser.cs" />
     <Compile Include="Interfaces\Tokens\ITokenParsersProvider.cs" />
     <Compile Include="Tokenization\Exceptions\MissingReaderException.cs" />
-    <Compile Include="Tokenization\Tokens\MultiplicationToken.cs" />
+    <Compile Include="Interfaces\Tokens\IOperatorToken.cs" />
     <Compile Include="Tokenization\Tokens\LiteralToken.cs" />
     <Compile Include="Tokenization\NumberTokenParser.cs" />
     <Compile Include="Tokenization\Tokens\OpenBracketsToken.cs" />
@@ -106,7 +112,6 @@
     <Compile Include="Tokenization\SpaceTokenParser.cs" />
     <Compile Include="Tokenization\StringInputReader.cs" />
     <Compile Include="Tokenization\StringInputReaderFactory.cs" />
-    <Compile Include="Tokenization\Tokens\SubstractionToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

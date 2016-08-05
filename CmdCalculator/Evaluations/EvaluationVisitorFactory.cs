@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Evaluations
 {
-    class EvaluationVisitorFactory<T> : IEvaluationVisitorFactory<T>
+    public class EvaluationVisitorFactory<T> : IEvaluationVisitorFactory<T>
     {
         private readonly IExpressionEvaluatorProvider<T> _provider;
 

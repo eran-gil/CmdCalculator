@@ -14,12 +14,12 @@ namespace CmdCalculator.Extensions
             return parts;
         }
 
-        public static IEnumerable<int> GetAllIndexesOf<T>(this IEnumerable<IToken> str)
+        public static IEnumerable<int> GetAllIndexesOf(this IEnumerable<IToken> str, IToken wantedToken)
         {
-            int count = 0;
+            var count = 0;
             foreach (var token in str)
             {
-                if (token is T)
+                if (token.Equals(wantedToken))
                 {
                     yield return count;
                 }
