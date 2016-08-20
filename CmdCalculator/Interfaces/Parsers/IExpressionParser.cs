@@ -9,7 +9,8 @@ namespace CmdCalculator.Interfaces.Parsers
     {
         bool CanParseExpression(IEnumerable<IToken> input);
 
-        IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser);
         int Priority { get; }
+
+        IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser);
     }
 }

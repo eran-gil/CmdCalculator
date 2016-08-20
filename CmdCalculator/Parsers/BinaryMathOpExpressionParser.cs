@@ -4,17 +4,20 @@ using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
 using CmdCalculator.Interfaces.Expressions;
+using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class BinaryMathOpExpressionParser<T> : IExpressionParser
-        where T : IToken
+    public class BinaryMathOpExpressionParser<TOp> : IExpressionParser
+        where TOp : IOperator
     {
+        private readonly IOperatorToken<TOp> _operatorToken;
 
-        public BinaryMathOpExpressionParser(int priority)
+        public BinaryMathOpExpressionParser(int priority, IOperatorToken<TOp> operatorToken)
         {
+            _operatorToken = operatorToken;
             Priority = priority;
         }
 
@@ -22,12 +25,12 @@ namespace CmdCalculator.Parsers
 
         public bool CanParseExpression(IEnumerable<IToken> input)
         {
-            return input.OfType<T>().Any();
+            return input.Contains(_operatorToken);
         }
 
         public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
         {
-            var splitLocations = input.GetAllIndexesOf<T>().ToList();
+            var splitLocations = input.GetAllIndexesOf(_operatorToken).ToList();
             splitLocations.Reverse();
             IExpression expression = null;
 
@@ -56,7 +59,7 @@ namespace CmdCalculator.Parsers
                 return null;
             }
 
-            var expression = new BinaryOpExpression<T>(firstOperand, secondOperand, Priority);
+            var expression = new BinaryOpExpression<TOp>(firstOperand, secondOperand, Priority);
             return expression;
         }
 

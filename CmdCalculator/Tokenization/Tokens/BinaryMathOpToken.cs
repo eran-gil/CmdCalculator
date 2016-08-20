@@ -3,17 +3,17 @@ using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Tokenization.Tokens
 {
-    public class CloseBracketsToken<TOp> : IOperatorToken<TOp>
+    public class BinaryMathOpToken<TOp> : IOperatorToken<TOp>
         where TOp : IOperator
     {
-        public TOp Op { get; }
+        public TOp Op{ get; private set; }
 
         public string OpRepresentation
         {
             get { return Op.OpRepresentation; }
         }
 
-        public CloseBracketsToken(TOp op)
+        public BinaryMathOpToken(TOp op)
         {
             Op = op;
         }

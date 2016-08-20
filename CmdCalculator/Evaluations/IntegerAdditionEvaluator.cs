@@ -1,8 +1,8 @@
-﻿using CmdCalculator.Tokenization.Tokens;
+﻿using CmdCalculator.Operators;
 
 namespace CmdCalculator.Evaluations
 {
-    class IntegerAdditionEvaluator : BinaryExpressionEvaluatorBase<AdditionToken,int>
+    public class IntegerAdditionEvaluator : BinaryExpressionEvaluatorBase<AdditionOperator, int>
     {
         protected override int Evaluate(int left, int right)
         {
