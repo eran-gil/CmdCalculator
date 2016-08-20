@@ -28,7 +28,7 @@ namespace CmdCalculator.Test
         }
 
         [Test, TestCaseSource(nameof(InvalidInputTestCases))]
-        public void Tokenizing_Invalid_Input_Returns_Expected_Tokens(string input, IEnumerable<IToken> expected)
+        public void Tokenizing_Invalid_Input_Throws_Missing_Reader_Exception(string input, IEnumerable<IToken> expected)
         {
             //Arrange
             var tokenizerFactory = Container.Resolve<ITokenizerFactory<string>>();
