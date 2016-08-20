@@ -4,7 +4,7 @@ using CmdCalculator.Interfaces.Tokens;
 namespace CmdCalculator.Tokenization.Tokens
 {
     [DebuggerDisplay("{Value}")]
-    class LiteralToken : IToken
+    public class LiteralToken : IToken
     {
         public LiteralToken(string value)
         {
@@ -12,5 +12,15 @@ namespace CmdCalculator.Tokenization.Tokens
         }
 
         public string Value { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            var token = obj as LiteralToken;
+            if (token != null)
+            {
+                return token.Value == Value;
+            }
+            return base.Equals(obj);
+        }
     }
 }

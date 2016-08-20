@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Evaluations;
@@ -25,6 +26,12 @@ namespace CmdCalculator
         public TOutput Calculate(TInput input)
         {
             var tokenizedInput = _inputTokenizer.Tokenize(input);
+
+            if (!tokenizedInput.Any())
+            {
+                return default(TOutput);
+            }
+
             var topExpression = _expressionParser.ParseExpression(tokenizedInput, null);
             if (topExpression == null)
             {
