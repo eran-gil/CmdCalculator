@@ -6,7 +6,7 @@ using CmdCalculator.Tokenization.Tokens;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 
-namespace CmdCalculator.Test
+namespace CmdCalculator.Test.Tokenization
 {
     public class TokenizationTest
     {
