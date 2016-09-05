@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Tokenization
 {
-    class SpaceTokenParser : ITokenParser<char>
+    public class SpaceTokenParser : ITokenParser<char>
     {
         public bool CanRead(IInputPeeker<char> peeker)
         {
