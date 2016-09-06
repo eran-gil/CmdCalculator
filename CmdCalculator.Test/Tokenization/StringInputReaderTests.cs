@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace CmdCalculator.Test.Tokenization
 {
+    [TestFixture]
     public class StringInputReaderTests
     {
         private static readonly IUnityContainer Container = CalculatorComponentsFactory.GenerateCalculatorComponentsContainer();
@@ -39,27 +40,26 @@ namespace CmdCalculator.Test.Tokenization
             Assert.AreEqual(peekedCount, expectedCount);
         }
 
-        private static readonly object[] ValidPeeking1CharInputs =
+        private static readonly TestCaseData[] ValidPeeking1CharInputs =
         {
-            new object[] {"", '\0'},
-            new object[] {"H", 'H'},
-            new object[] {"h", 'h'},
-            new object[] {"Hello", 'H'},
-            new object[] {"hello", 'h'},
-            new object[] {"1", '1'},
-            new object[] {"\'", '\''},
-            new object[] {"\"", '\"'},
-            new object[] {"(", '('},
+            new TestCaseData("", '\0').SetName("Empty String Peeking 1 Char"),
+            new TestCaseData("H", 'H').SetName("1-Letter Upper String Peeking 1 Char"),
+            new TestCaseData("h", 'h').SetName("1-Letter Lower String Peeking 1 Char"),
+            new TestCaseData("Hello", 'H').SetName("5-Letter Capitalized String Peeking 1 Char"),
+            new TestCaseData("hello", 'h').SetName("5-Letter Lower String Peeking 1 Char"),
+            new TestCaseData("1", '1').SetName("1-Digit String Peeking 1 Char"),
+            new TestCaseData("\'", '\'').SetName("1-Symbol String Peeking 1 Char"),
+            new TestCaseData("(", '(').SetName("1-Operator String Peeking 1 Char"),
         };
 
-        private static readonly object[] ValidPeekingCharsInputs =
+        private static readonly TestCaseData[] ValidPeekingCharsInputs =
         {
-            new object[] {"", "\0", 0},
-            new object[] {"H", "H", 1},
-            new object[] {"H", "H\0", 1},
-            new object[] {"Hello", "Hello", 5},
-            new object[] {"Hello", "He", 2},
-            new object[] {"123", "123", 3},
+            new TestCaseData("", "\0", 0).SetName("Empty String Peeking 1 Char"),
+            new TestCaseData("H", "H", 1).SetName("1-Letter String Peeking 1 Char"),
+            new TestCaseData("H", "H\0", 1).SetName("1-Letter String Peeking 2 Chars"),
+            new TestCaseData("Hello", "Hello", 5).SetName("5-Letter String Peeking 5 Chars"),
+            new TestCaseData("Hello", "He", 2).SetName("5-Letter String Peeking 2 Chars"),
+            new TestCaseData("123", "123", 3).SetName("3-Digit String Peeking 3 Chars"),
         };
     }
 }

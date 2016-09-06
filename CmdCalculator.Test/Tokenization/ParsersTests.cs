@@ -20,7 +20,7 @@ namespace CmdCalculator.Test.Tokenization
             RegisterTokenParsersToContainer(Container);
         }
 
-        [Test, TestCaseSource(nameof(ValidTokenParsersCanReadInput))]
+        [Test, TestCaseSource(nameof(TestCaseDataValidTokenParsersCanReadInput))]
         public void Parser_Can_Read_Is_Correct(string input, Type parserType, bool expected)
         {
             //Arrange
@@ -61,61 +61,63 @@ namespace CmdCalculator.Test.Tokenization
             container.RegisterInstance(parser);
         }
 
-        private static readonly object[] ValidTokenParsersCanReadInput =
+      
+
+        private static readonly TestCaseData[] TestCaseDataValidTokenParsersCanReadInput =
         {
             //SpaceTokenParser
-            new object[] {" ", typeof(SpaceTokenParser), true},
-            new object[] {"  ", typeof(SpaceTokenParser), true},
-            new object[] {" A", typeof(SpaceTokenParser), true},
-            new object[] {"A", typeof(SpaceTokenParser), false},
-            new object[] {"A ", typeof(SpaceTokenParser), false},
+            new TestCaseData(" ", typeof(SpaceTokenParser), true).SetName("Space Token Parser Test 1"),
+            new TestCaseData("  ", typeof(SpaceTokenParser), true).SetName("Space Token Parser Test 2"),
+            new TestCaseData(" A", typeof(SpaceTokenParser), true).SetName("Space Token Parser Test 3"),
+            new TestCaseData("A", typeof(SpaceTokenParser), false).SetName("Space Token Parser Test 4"),
+            new TestCaseData("A ", typeof(SpaceTokenParser), false).SetName("Space Token Parser Test 5"),
             //NumberTokenParser
-            new object[] {"1", typeof(NumberTokenParser), true},
-            new object[] {"1234", typeof(NumberTokenParser), true},
-            new object[] {"A", typeof(NumberTokenParser), false},
-            new object[] {"A1", typeof(NumberTokenParser), false},
-            new object[] {"A 1", typeof(NumberTokenParser), false},
+            new TestCaseData("1", typeof(NumberTokenParser), true).SetName("Number Token Parser Test 1"),
+            new TestCaseData("1234", typeof(NumberTokenParser), true).SetName("Number Token Parser Test 2"),
+            new TestCaseData("A", typeof(NumberTokenParser), false).SetName("Number Token Parser Test 3"),
+            new TestCaseData("A1", typeof(NumberTokenParser), false).SetName("Number Token Parser Test 4"),
+            new TestCaseData("A 1", typeof(NumberTokenParser), false).SetName("Number Token Parser Test 5"),
             //Addition OperatorTokenParser
-            new object[] {"+", typeof(OperatorTokenParser<AdditionOperator>), true},
-            new object[] {"+1", typeof(OperatorTokenParser<AdditionOperator>), true},
-            new object[] {"-", typeof(OperatorTokenParser<AdditionOperator>), false},
-            new object[] {"*", typeof(OperatorTokenParser<AdditionOperator>), false},
-            new object[] {"/", typeof(OperatorTokenParser<AdditionOperator>), false},
+            new TestCaseData("+", typeof(OperatorTokenParser<AdditionOperator>), true).SetName("Addition Operator Token Parser Test 1"),
+            new TestCaseData("+1", typeof(OperatorTokenParser<AdditionOperator>), true).SetName("Addition Operator Token Parser Test 2"),
+            new TestCaseData("-", typeof(OperatorTokenParser<AdditionOperator>), false).SetName("Addition Operator Token Parser Test 3"),
+            new TestCaseData("*", typeof(OperatorTokenParser<AdditionOperator>), false).SetName("Addition Operator Token Parser Test 4"),
+            new TestCaseData("/", typeof(OperatorTokenParser<AdditionOperator>), false).SetName("Addition Operator Token Parser Test 5"),
             //Subtraction OperatorTokenParser
-            new object[] {"-", typeof(OperatorTokenParser<SubtractionOperator>), true},
-            new object[] {"-1", typeof(OperatorTokenParser<SubtractionOperator>), true},
-            new object[] {"+", typeof(OperatorTokenParser<SubtractionOperator>), false},
-            new object[] {"*", typeof(OperatorTokenParser<SubtractionOperator>), false},
-            new object[] {"/", typeof(OperatorTokenParser<SubtractionOperator>), false},
+            new TestCaseData("-", typeof(OperatorTokenParser<SubtractionOperator>), true).SetName("Subtraction Operator Token Parser Test 1"),
+            new TestCaseData("-1", typeof(OperatorTokenParser<SubtractionOperator>), true).SetName("Subtraction Operator Token Parser Test 2"),
+            new TestCaseData("+", typeof(OperatorTokenParser<SubtractionOperator>), false).SetName("Subtraction Operator Token Parser Test 3"),
+            new TestCaseData("*", typeof(OperatorTokenParser<SubtractionOperator>), false).SetName("Subtraction Operator Token Parser Test 4"),
+            new TestCaseData("/", typeof(OperatorTokenParser<SubtractionOperator>), false).SetName("Subtraction Operator Token Parser Test 5"),
             //Multiplication OperatorTokenParser
-            new object[] {"*", typeof(OperatorTokenParser<MultiplicationOperator>), true},
-            new object[] {"*1", typeof(OperatorTokenParser<MultiplicationOperator>), true},
-            new object[] {"+", typeof(OperatorTokenParser<MultiplicationOperator>), false},
-            new object[] {"-", typeof(OperatorTokenParser<MultiplicationOperator>), false},
-            new object[] {"/", typeof(OperatorTokenParser<MultiplicationOperator>), false},
+            new TestCaseData("*", typeof(OperatorTokenParser<MultiplicationOperator>), true).SetName("Multiplication Operator Token Parser Test 1"),
+            new TestCaseData("*1", typeof(OperatorTokenParser<MultiplicationOperator>), true).SetName("Multiplication Operator Token Parser Test 2"),
+            new TestCaseData("+", typeof(OperatorTokenParser<MultiplicationOperator>), false).SetName("Multiplication Operator Token Parser Test 3"),
+            new TestCaseData("-", typeof(OperatorTokenParser<MultiplicationOperator>), false).SetName("Multiplication Operator Token Parser Test 4"),
+            new TestCaseData("/", typeof(OperatorTokenParser<MultiplicationOperator>), false).SetName("Multiplication Operator Token Parser Test 5"),
             //Division OperatorTokenParser
-            new object[] {"/", typeof(OperatorTokenParser<DivisionOperator>), true},
-            new object[] {"/1", typeof(OperatorTokenParser<DivisionOperator>), true},
-            new object[] {"+", typeof(OperatorTokenParser<DivisionOperator>), false},
-            new object[] {"-", typeof(OperatorTokenParser<DivisionOperator>), false},
-            new object[] {"*", typeof(OperatorTokenParser<DivisionOperator>), false},
+            new TestCaseData("/", typeof(OperatorTokenParser<DivisionOperator>), true).SetName("Division Operator Token Parser Test 1"),
+            new TestCaseData("/1", typeof(OperatorTokenParser<DivisionOperator>), true).SetName("Division Operator Token Parser Test 2"),
+            new TestCaseData("+", typeof(OperatorTokenParser<DivisionOperator>), false).SetName("Division Operator Token Parser Test 3"),
+            new TestCaseData("-", typeof(OperatorTokenParser<DivisionOperator>), false).SetName("Division Operator Token Parser Test 4"),
+            new TestCaseData("*", typeof(OperatorTokenParser<DivisionOperator>), false).SetName("Division Operator Token Parser Test 5"),
             //Opening Brackets OperatorTokenParser
-            new object[] {"(", typeof(OperatorTokenParser<OpeningBracketOperator>), true},
-            new object[] {"(1+1)", typeof(OperatorTokenParser<OpeningBracketOperator>), true},
-            new object[] {")", typeof(OperatorTokenParser<OpeningBracketOperator>), false},
-            new object[] {"+", typeof(OperatorTokenParser<OpeningBracketOperator>), false},
-            new object[] {"-", typeof(OperatorTokenParser<OpeningBracketOperator>), false},
-            new object[] {"*", typeof(OperatorTokenParser<OpeningBracketOperator>), false},
-            new object[] {"/", typeof(OperatorTokenParser<OpeningBracketOperator>), false},
+            new TestCaseData("(", typeof(OperatorTokenParser<OpeningBracketOperator>), true).SetName("Opening Bracket Operator Token Parser Test 1"),
+            new TestCaseData("(1+1)", typeof(OperatorTokenParser<OpeningBracketOperator>), true).SetName("Opening Bracket Operator Token Parser Test 2"),
+            new TestCaseData(")", typeof(OperatorTokenParser<OpeningBracketOperator>), false).SetName("Opening Bracket Operator Token Parser Test3 "),
+            new TestCaseData("+", typeof(OperatorTokenParser<OpeningBracketOperator>), false).SetName("Opening Bracket Operator Token Parser Test 4"),
+            new TestCaseData("-", typeof(OperatorTokenParser<OpeningBracketOperator>), false).SetName("Opening Bracket Operator Token Parser Test 5"),
+            new TestCaseData("*", typeof(OperatorTokenParser<OpeningBracketOperator>), false).SetName("Opening Bracket Operator Token Parser Test 6"),
+            new TestCaseData("/", typeof(OperatorTokenParser<OpeningBracketOperator>), false).SetName("Opening Bracket Operator Token Parser Test 7"),
             //Closing Brackets OperatorTokenParser
-            new object[] {")", typeof(OperatorTokenParser<ClosingBracketOperator>), true},
-            new object[] {")(1+1)", typeof(OperatorTokenParser<ClosingBracketOperator>), true},
-            new object[] {"(", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
-            new object[] {"1)", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
-            new object[] {"+", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
-            new object[] {"-", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
-            new object[] {"*", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
-            new object[] {"/", typeof(OperatorTokenParser<ClosingBracketOperator>), false},
+            new TestCaseData(")", typeof(OperatorTokenParser<ClosingBracketOperator>), true).SetName("Closing Bracket Operator Token Parser Test 1"),
+            new TestCaseData(")(1+1)", typeof(OperatorTokenParser<ClosingBracketOperator>), true).SetName("Closing Bracket Operator Token Parser Test 2"),
+            new TestCaseData("(", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 3"),
+            new TestCaseData("1)", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 4"),
+            new TestCaseData("+", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 5"),
+            new TestCaseData("-", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 6"),
+            new TestCaseData("*", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 7"),
+            new TestCaseData("/", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 8"),
 
         };
     }

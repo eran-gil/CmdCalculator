@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace CmdCalculator.Test
 {
+    [TestFixture]
     public class CalculatorTests
     {
         private static readonly IUnityContainer Container = CalculatorComponentsFactory.GenerateCalculatorComponentsContainer();
@@ -38,27 +39,28 @@ namespace CmdCalculator.Test
             Assert.Throws<CalculatorException>(calculateDelegate);
         }
 
-        private static readonly object[] ValidInputCases =
+        private static readonly TestCaseData[] ValidInputCases =
         {
-            new object[] { "", 0 },
-            new object[] { "1+1", 2 },
-            new object[] { "1-1", 0 },
-            new object[] { "1*1", 1 },
-            new object[] { "1/1", 1 },
-            new object[] { "2-2-2", -2 },
-            new object[] { "4/2/2", 1 },
-            new object[] { "6+(6+6)*6", 78 },
-            new object[] { "(6+6)*6", 72 },
-            new object[] { "((6+6)/2/3*6+6)*12", 216 },
+            new TestCaseData("", 0).SetName("Empty string evaluates to 0"),
+            new TestCaseData("1+1", 2).SetName("1+1 = 2"),
+            new TestCaseData("1-1", 0).SetName("1-1 = 0"),
+            new TestCaseData("1*1", 1).SetName("1*1 = 1"),
+            new TestCaseData("1/1", 1).SetName("1/1 = 1"),
+            new TestCaseData("2-2-2", -2).SetName("2-2-2 = -2"),
+            new TestCaseData("4/2/2", 1).SetName("4/2/2 = 1"),
+            new TestCaseData("6+(6+6)*6", 78).SetName("6+(6+6)*6 = 78"),
+            new TestCaseData("(6+6)*6", 72).SetName("(6+6)*6 = 72"),
+            new TestCaseData("((6+6)/2/3*6+6)*12", 216).SetName("((6+6)/2/3*6+6)*12 = 216"),
         };
 
-        private static readonly object[] InvalidInputCases =
+        private static readonly TestCaseData[] InvalidInputCases =
         {
-            new object[] { "(" },
-            new object[] { ")" },
-            new object[] { "1-" },
-            new object[] { "(1+)1" },
-            new object[] { "(1+1))(" },
+            new TestCaseData("(").SetName("Only one open bracket with no closing"),
+            new TestCaseData(")").SetName("Only one closed bracket with no opening"),
+            new TestCaseData("1-").SetName("Binary operator with only left operand"),
+            new TestCaseData("-1").SetName("Binary operator with only right operand"),
+            new TestCaseData("(1+)1").SetName("Closing bracket in the middle of binary operator expression"),
+            new TestCaseData("(1+1))(").SetName("Same number of opening and closing brackets, but in invalid order"),
         };
 
     }
