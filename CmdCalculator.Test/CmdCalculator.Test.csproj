@@ -75,7 +75,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokenization\ParsersTests.cs" />
     <Compile Include="Tokenization\StringInputReaderTests.cs" />
-    <Compile Include="Tokenization\TokenizationTest.cs" />
+    <Compile Include="Tokenization\TokenizationTests.cs" />
+    <Compile Include="Tokenization\TokensTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

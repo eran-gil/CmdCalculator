@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace CmdCalculator.Test.Tokenization
 {
     [TestFixture]
-    public class TokenizationTest
+    public class TokenizationTests
     {
         private static readonly IUnityContainer Container = CalculatorComponentsFactory.GenerateCalculatorComponentsContainer();
 
