@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="CalculatorComponentsFactory.cs" />
     <Compile Include="CalculatorTests.cs" />
+    <Compile Include="Parsers\LiteralParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokenization\ParsersTests.cs" />
     <Compile Include="Tokenization\StringInputReaderTests.cs" />
