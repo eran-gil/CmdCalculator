@@ -6,6 +6,7 @@ using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
+using CmdCalculator.Tokenization.Tokens;
 
 namespace CmdCalculator.Parsers
 {
@@ -14,9 +15,9 @@ namespace CmdCalculator.Parsers
     {
         private readonly IOperatorToken<TOp> _operatorToken;
 
-        public BinaryMathOpExpressionParser(int priority, IOperatorToken<TOp> operatorToken)
+        public BinaryMathOpExpressionParser(int priority, TOp operatorType)
         {
-            _operatorToken = operatorToken;
+            _operatorToken = new BinaryMathOpToken<TOp>(operatorType);
             Priority = priority;
         }
 

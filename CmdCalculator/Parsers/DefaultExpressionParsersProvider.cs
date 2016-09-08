@@ -30,20 +30,20 @@ namespace CmdCalculator.Parsers
 
         private static void AddBinaryOperatorParsers(ICollection<IExpressionParser> operatorParsers)
         {
-            var additionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
-            IExpressionParser parser = new BinaryMathOpExpressionParser<AdditionOperator>(1, additionToken);
+            var additionOperator = new AdditionOperator();
+            IExpressionParser parser = new BinaryMathOpExpressionParser<AdditionOperator>(1, additionOperator);
             operatorParsers.Add(parser);
 
-            var subtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
-            parser = new BinaryMathOpExpressionParser<SubtractionOperator>(1, subtractionToken);
+            var subtractionOperator = new SubtractionOperator();
+            parser = new BinaryMathOpExpressionParser<SubtractionOperator>(1, subtractionOperator);
             operatorParsers.Add(parser);
 
-            var multiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
-            parser = new BinaryMathOpExpressionParser<MultiplicationOperator>(2, multiplicationToken);
+            var multiplicationOperator = new MultiplicationOperator();
+            parser = new BinaryMathOpExpressionParser<MultiplicationOperator>(2, multiplicationOperator);
             operatorParsers.Add(parser);
 
-            var divisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
-            parser = new BinaryMathOpExpressionParser<DivisionOperator>(2, divisionToken);
+            var divisionOperator = new DivisionOperator();
+            parser = new BinaryMathOpExpressionParser<DivisionOperator>(2, divisionOperator);
             operatorParsers.Add(parser);
         }
 
