@@ -7,7 +7,7 @@ using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class AllExpressionsParser : IExpressionParser
+    public class AllExpressionsParser : ITopExpressionParser
     {
         private readonly List<IExpressionParser> _operatorParsers;
 
@@ -21,11 +21,6 @@ namespace CmdCalculator.Parsers
             return true;
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser)
-        {
-            return ParseExpression(input);
-        }
-
         public int Priority
         {
             get
@@ -34,7 +29,7 @@ namespace CmdCalculator.Parsers
             }
         }
 
-        private IExpression ParseExpression(IEnumerable<IToken> input)
+        public IExpression ParseExpression(IEnumerable<IToken> input)
         {
             foreach (var operatorParser in _operatorParsers)
             {
@@ -42,7 +37,7 @@ namespace CmdCalculator.Parsers
                 {
                     continue;
                 }
-                var parsedExpression = operatorParser.ParseExpression(input, ParseExpression);
+                var parsedExpression = operatorParser.ParseExpression(input, this);
                 if (parsedExpression == null)
                 {
                     continue;

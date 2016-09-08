@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
@@ -28,7 +27,7 @@ namespace CmdCalculator.Parsers
             return input.Contains(_operatorToken);
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
+        public IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser operandParser)
         {
             var splitLocations = input.GetAllIndexesOf(_operatorToken).ToList();
             splitLocations.Reverse();
@@ -48,11 +47,11 @@ namespace CmdCalculator.Parsers
         }
 
         private IBinaryOpExpression GetExpressionForParts(IEnumerable<IEnumerable<IToken>> splittedInput,
-            Func<IEnumerable<IToken>, IExpression> operandParser)
+            ITopExpressionParser operandParser)
         {
             var splittedInputArr = splittedInput.ToArray();
-            var firstOperand = operandParser(splittedInputArr[0]);
-            var secondOperand = operandParser(splittedInputArr[1]);
+            var firstOperand = operandParser.ParseExpression(splittedInputArr[0]);
+            var secondOperand = operandParser.ParseExpression(splittedInputArr[1]);
 
             if (firstOperand == null || secondOperand == null || !IsParsedInCorrectOrder(secondOperand))
             {

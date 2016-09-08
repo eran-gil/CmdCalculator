@@ -103,6 +103,7 @@
     <Compile Include="Parsers\AllExpressionsParser.cs" />
     <Compile Include="Parsers\BinaryMathOpExpressionParser.cs" />
     <Compile Include="Parsers\BracketsExpressionParser.cs" />
+    <Compile Include="Parsers\ITopExpressionParser.cs" />
     <Compile Include="Parsers\LiteralParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

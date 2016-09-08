@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
@@ -25,11 +24,11 @@ namespace CmdCalculator.Parsers
             return inputList.Count() > 2 && IsWholeExpressionInBrackets(inputList);
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
+        public IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser operandParser)
         {
             var innerExpressionStr = input.Skip(1).ToList();
             innerExpressionStr.RemoveAt(innerExpressionStr.Count - 1);
-            var innerExpression = operandParser(innerExpressionStr);
+            var innerExpression = operandParser.ParseExpression(innerExpressionStr);
             var bracketsExpression = new BracketOpExpression(innerExpression, Priority);
             return bracketsExpression;
         }

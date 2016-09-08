@@ -4,6 +4,7 @@ using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
 using CmdCalculator.Parsers;
 using CmdCalculator.Tokenization.Tokens;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Parsers
@@ -35,9 +36,10 @@ namespace CmdCalculator.Test.Parsers
         public void Literal_Parser_Parses_Input_Correctly(IEnumerable<IToken> input, LiteralExpression expected)
         {
             //Arrange
-
+            var topParser = A.Fake<ITopExpressionParser>();
+            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(null);
             //Act
-            var result = _parser.ParseExpression(input, tokens => null);
+            var result = _parser.ParseExpression(input, topParser);
 
             //Assert
             Assert.IsInstanceOf<LiteralExpression>(result);

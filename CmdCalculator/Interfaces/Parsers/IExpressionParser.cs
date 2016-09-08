@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Tokens;
+using CmdCalculator.Parsers;
 
 namespace CmdCalculator.Interfaces.Parsers
 {
@@ -11,6 +12,6 @@ namespace CmdCalculator.Interfaces.Parsers
 
         int Priority { get; }
 
-        IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser);
+        IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser topExpressionParser);
     }
 }

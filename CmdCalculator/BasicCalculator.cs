@@ -11,7 +11,7 @@ namespace CmdCalculator
 {
     public class BasicCalculator<TInput, TOutput> : ICalculator<TInput, TOutput>
     {
-        private readonly IExpressionParser _expressionParser;
+        private readonly ITopExpressionParser _expressionParser;
         private readonly ITokenizer<TInput> _inputTokenizer;
         private readonly IEvaluationVisitor<TOutput> _visitor;
 
@@ -32,7 +32,7 @@ namespace CmdCalculator
                 return default(TOutput);
             }
 
-            var topExpression = _expressionParser.ParseExpression(tokenizedInput, null);
+            var topExpression = _expressionParser.ParseExpression(tokenizedInput);
             if (topExpression == null)
             {
                 var message = string.Format("The expression \"{0}\" could not be parsed. Please try again.", input);
