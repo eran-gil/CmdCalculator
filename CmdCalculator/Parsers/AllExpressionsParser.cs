@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
@@ -14,19 +13,6 @@ namespace CmdCalculator.Parsers
         public AllExpressionsParser(IEnumerable<IExpressionParser> operatorParsers)
         {
             _operatorParsers = operatorParsers.OrderBy(x => x.Priority).ToList();
-        }
-
-        public bool CanParseExpression(IEnumerable<IToken> input)
-        {
-            return true;
-        }
-
-        public int Priority
-        {
-            get
-            {
-                return int.MaxValue;
-            }
         }
 
         public IExpression ParseExpression(IEnumerable<IToken> input)
