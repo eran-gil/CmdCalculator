@@ -17,13 +17,14 @@ namespace CmdCalculator.Parsers
 
         public IExpression ParseExpression(IEnumerable<IToken> input)
         {
+            var inputArray = input.ToArray();
             foreach (var operatorParser in _operatorParsers)
             {
-                if (!operatorParser.CanParseExpression(input))
+                if (!operatorParser.CanParseExpression(inputArray))
                 {
                     continue;
                 }
-                var parsedExpression = operatorParser.ParseExpression(input, this);
+                var parsedExpression = operatorParser.ParseExpression(inputArray, this);
                 if (parsedExpression == null)
                 {
                     continue;

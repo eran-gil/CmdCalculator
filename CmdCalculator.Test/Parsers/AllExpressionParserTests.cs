@@ -43,7 +43,7 @@ namespace CmdCalculator.Test.Parsers
         }
 
         [Test]
-        public void Parser_Handles_Null_From_Parsers()
+        public void Parser_Handles_Null_From_Parsers_Correctly()
         {
             //Arrange
             var badParser = FakeAlwaysYesExpressionParser(1);
