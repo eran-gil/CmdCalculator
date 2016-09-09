@@ -80,6 +80,7 @@
     <Compile Include="Parsers\BracketsExpressionParserTests.cs" />
     <Compile Include="Parsers\LiteralParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokenization\Mocks\StringInputReaderMock.cs" />
     <Compile Include="Tokenization\ParsersTests.cs" />
     <Compile Include="Tokenization\StringInputReaderTests.cs" />
     <Compile Include="Tokenization\TokenizationTests.cs" />

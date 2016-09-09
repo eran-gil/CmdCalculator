@@ -30,7 +30,23 @@ namespace CmdCalculator.Test.Tokenization
             var canReadMethod = parserType.GetMethod("CanRead");
 
             //Act
-            var canRead = (bool) (canReadMethod.Invoke(parser, new object[] { inputReader }));
+            var canRead = (bool)(canReadMethod.Invoke(parser, new object[] { inputReader }));
+
+            //Assert
+            Assert.AreEqual(expected, canRead);
+        }
+
+        [Test, TestCaseSource(nameof(TestCaseDataValidTokenParsersReadTokenInput))]
+        public void Parser_Reads_Token_Correctly(string input, Type parserType, IToken expected)
+        {
+            //Arrange
+            var inputReaderFactory = Container.Resolve<IInputReaderFactory<string, char>>();
+            var inputReader = inputReaderFactory.Create(input);
+            var parser = Container.Resolve(parserType);
+            var readTokenMethod = parserType.GetMethod("ReadToken");
+
+            //Act
+            var canRead = (IToken)(readTokenMethod.Invoke(parser, new object[] { inputReader }));
 
             //Assert
             Assert.AreEqual(expected, canRead);
@@ -61,7 +77,14 @@ namespace CmdCalculator.Test.Tokenization
             container.RegisterInstance(parser);
         }
 
-      
+        private static readonly IToken AdditionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
+        private static readonly IToken SubtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
+        private static readonly IToken MultiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
+        private static readonly IToken DivisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
+        private static readonly IToken OpenBracketsToken =
+            new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator());
+        private static readonly IToken CloseBracketsToken =
+            new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator());
 
         private static readonly TestCaseData[] TestCaseDataValidTokenParsersCanReadInput =
         {
@@ -118,7 +141,37 @@ namespace CmdCalculator.Test.Tokenization
             new TestCaseData("-", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 6"),
             new TestCaseData("*", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 7"),
             new TestCaseData("/", typeof(OperatorTokenParser<ClosingBracketOperator>), false).SetName("Closing Bracket Operator Token Parser Test 8"),
-
         };
+
+        private static readonly TestCaseData[] TestCaseDataValidTokenParsersReadTokenInput =
+        {
+            //SpaceTokenParser
+            new TestCaseData(" ", typeof(SpaceTokenParser), null).SetName("Space Token Parser Test 1"),
+            new TestCaseData("  ", typeof(SpaceTokenParser), null).SetName("Space Token Parser Test 2"),
+            new TestCaseData(" A", typeof(SpaceTokenParser), null).SetName("Space Token Parser Test 3"),
+            //NumberTokenParser
+            new TestCaseData("1", typeof(NumberTokenParser), new LiteralToken("1")).SetName("Number Token Parser Test 1"),
+            new TestCaseData("1234", typeof(NumberTokenParser), new LiteralToken("1234")).SetName("Number Token Parser Test 2"),
+            //Addition OperatorTokenParser
+            new TestCaseData("+", typeof(OperatorTokenParser<AdditionOperator>), AdditionToken).SetName("Addition Operator Token Parser Test 1"),
+            new TestCaseData("+1", typeof(OperatorTokenParser<AdditionOperator>), AdditionToken).SetName("Addition Operator Token Parser Test 2"),
+            //Subtraction OperatorTokenParser
+            new TestCaseData("-", typeof(OperatorTokenParser<SubtractionOperator>), SubtractionToken).SetName("Subtraction Operator Token Parser Test 1"),
+            new TestCaseData("-1", typeof(OperatorTokenParser<SubtractionOperator>), SubtractionToken).SetName("Subtraction Operator Token Parser Test 2"),
+            //Multiplication OperatorTokenParser
+            new TestCaseData("*", typeof(OperatorTokenParser<MultiplicationOperator>), MultiplicationToken).SetName("Multiplication Operator Token Parser Test 1"),
+            new TestCaseData("*1", typeof(OperatorTokenParser<MultiplicationOperator>), MultiplicationToken).SetName("Multiplication Operator Token Parser Test 2"),
+            //Division OperatorTokenParser
+            new TestCaseData("/", typeof(OperatorTokenParser<DivisionOperator>), DivisionToken).SetName("Division Operator Token Parser Test 1"),
+            new TestCaseData("/1", typeof(OperatorTokenParser<DivisionOperator>), DivisionToken).SetName("Division Operator Token Parser Test 2"),
+            //Opening Brackets OperatorTokenParser
+            new TestCaseData("(", typeof(OperatorTokenParser<OpeningBracketOperator>), OpenBracketsToken).SetName("Opening Bracket Operator Token Parser Test 1"),
+            new TestCaseData("(1+1)", typeof(OperatorTokenParser<OpeningBracketOperator>), OpenBracketsToken).SetName("Opening Bracket Operator Token Parser Test 2"),
+            //Closing Brackets OperatorTokenParser
+            new TestCaseData(")", typeof(OperatorTokenParser<ClosingBracketOperator>), CloseBracketsToken).SetName("Closing Bracket Operator Token Parser Test 1"),
+            new TestCaseData(")(1+1)", typeof(OperatorTokenParser<ClosingBracketOperator>), CloseBracketsToken).SetName("Closing Bracket Operator Token Parser Test 2"),
+        };
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CmdCalculator.Interfaces.Tokens;
+using CmdCalculator.Test.Tokenization.Mocks;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace CmdCalculator.Test.Tokenization
         public void Peeking_Returns_Expected_Characters(string input, string expectedChars, int expectedCount)
         {
             //Arrange
-            int length = expectedChars.Length;
+            var length = expectedChars.Length;
             var inputReaderFactory = Container.Resolve<IInputReaderFactory<string, char>>();
             var inputReader = inputReaderFactory.Create(input);
             var peekingOutput = new char[length];
@@ -38,6 +39,41 @@ namespace CmdCalculator.Test.Tokenization
             //Assert
             Assert.AreEqual(expectedChars.ToCharArray(), peekingOutput);
             Assert.AreEqual(peekedCount, expectedCount);
+        }
+
+        [Test, TestCaseSource(nameof(ValidPeeking1CharInputs))]
+        public void Readin_Returns_Expected_Char(string input, char expected)
+        {
+            //Arrange
+            var inputReader = new StringInputReaderMock(input);
+            var initialCount = inputReader.Count;
+            var expectedDifference = expected == '\0' ? 0 : 1;
+
+            //Act
+            var peeked = inputReader.Read();
+
+            //Assert
+            Assert.AreEqual(expected, peeked);
+            Assert.AreEqual(expectedDifference, inputReader.Count - initialCount);
+        }
+
+        [Test, TestCaseSource(nameof(ValidPeekingCharsInputs))]
+        public void Reading_Returns_Expected_Characters_And_Moves_Correctly(string input, string expectedChars,
+            int expectedCount)
+        {
+            //Arrange
+            var length = expectedChars.Length;
+            var inputReader = new StringInputReaderMock(input);
+            var peekingOutput = new char[length];
+            var initialCount = inputReader.Count;
+
+            //Act
+            var peekedCount = inputReader.Read(peekingOutput, length);
+
+            //Assert
+            Assert.AreEqual(expectedChars.ToCharArray(), peekingOutput);
+            Assert.AreEqual(expectedCount, peekedCount);
+            Assert.AreEqual(expectedCount, inputReader.Count - initialCount);
         }
 
         private static readonly TestCaseData[] ValidPeeking1CharInputs =
