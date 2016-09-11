@@ -4,17 +4,17 @@ using CmdCalculator.Interfaces.Expressions;
 
 namespace CmdCalculator.Evaluations
 {
-    public abstract class LiteralExpressionEvaluatorBase<TOp, TRes> : IExpressionEvaluator<TRes>
-        where TOp : ILiteralExpression
+    public abstract class LiteralExpressionEvaluatorBase<TExp, TRes> : IExpressionEvaluator<TRes>
+        where TExp : ILiteralExpression
     {
         public virtual Type GetSupportedExpressionType()
         {
-            return typeof(TOp);
+            return typeof(TExp);
         }
 
         public virtual TRes Evaluate(IExpression expr, IEvaluationVisitor<TRes> visitor)
         {
-            var expression = (TOp)expr;
+            var expression = (TExp)expr;
             return Parse(expression.Value);
         }
 
