@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="CalculatorComponentsFactory.cs" />
     <Compile Include="CalculatorTests.cs" />
+    <Compile Include="Evaluators\BracketsEvaluatorTests.cs" />
     <Compile Include="Parsers\AllExpressionParserTests.cs" />
     <Compile Include="Parsers\BinaryOpExpressionParserTests.cs" />
     <Compile Include="Parsers\BracketsExpressionParserTests.cs" />
