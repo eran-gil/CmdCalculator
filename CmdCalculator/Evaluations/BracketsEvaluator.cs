@@ -2,11 +2,11 @@
 
 namespace CmdCalculator.Evaluations
 {
-    class BracketsEvaluator<T> : UnaryExpressionEvaluatorBase<BracketOpExpression, T>
+    public class BracketsEvaluator<T> : UnaryExpressionEvaluatorBase<BracketOpExpression, T>
     {
-        protected override T Evaluate(T innerExpression)
+        protected override T Evaluate(T operand)
         {
-            return innerExpression;
+            return operand;
         }
     }
 }
