@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Evaluations
 {
-    public class IntegerExpressionEvaluator : LiteralExpressionEvaluatorBase<LiteralExpression, int>
+    public class IntegerLiteralExpressionEvaluator : LiteralExpressionEvaluatorBase<LiteralExpression, int>
     {
         protected override int Parse(string value)
         {

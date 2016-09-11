@@ -73,7 +73,7 @@
     <Compile Include="Evaluations\IntegerMultiplicationEvaluator.cs" />
     <Compile Include="Evaluations\IntegerSubstractionEvaluator.cs" />
     <Compile Include="Evaluations\LiteralExpressionEvaluatorBase.cs" />
-    <Compile Include="Evaluations\IntegerExpressionEvaluator.cs" />
+    <Compile Include="Evaluations\IntegerLiteralExpressionEvaluator.cs" />
     <Compile Include="Evaluations\Exceptions\MissingEvaluatorException.cs" />
     <Compile Include="Evaluations\UnaryExpressionEvaluatorBase.cs" />
     <Compile Include="Exceptions\CalculatorException.cs" />

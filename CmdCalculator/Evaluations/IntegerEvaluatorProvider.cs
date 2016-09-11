@@ -14,7 +14,7 @@ namespace CmdCalculator.Evaluations
                 new IntegerSubstractionEvaluator(),
                 new IntegerMultiplicationEvaluator(),
                 new IntegerDivisionEvaluator(),
-                new IntegerExpressionEvaluator()
+                new IntegerLiteralExpressionEvaluator()
             };
         }
     }
