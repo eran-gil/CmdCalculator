@@ -4,7 +4,7 @@ using CmdCalculator.Interfaces.Tokens;
 namespace CmdCalculator.Tokenization.Tokens
 {
     public class BinaryMathOpToken<TOp> : IOperatorToken<TOp>
-        where TOp : IOperator
+        where TOp : IOperator, new()
     {
         public TOp Op{ get; private set; }
 
@@ -13,9 +13,9 @@ namespace CmdCalculator.Tokenization.Tokens
             get { return Op.OpRepresentation; }
         }
 
-        public BinaryMathOpToken(TOp op)
+        public BinaryMathOpToken()
         {
-            Op = op;
+            Op = new TOp();
         }
 
         public override bool Equals(object obj)

@@ -41,11 +41,11 @@ namespace CmdCalculator.Test.Tokenization
         {
             new TestCaseData((Func<IToken>)(() => new LiteralToken("6")))
                 .SetName("Literal token with numerical value"),
-            new TestCaseData((Func<IToken>)(() => new BinaryMathOpToken<AdditionOperator>(new AdditionOperator())))
+            new TestCaseData((Func<IToken>)(() => new BinaryMathOpToken<AdditionOperator>()))
                 .SetName("Binary math operator token with operator type"),
-            new TestCaseData((Func<IToken>)(() => new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator())))
+            new TestCaseData((Func<IToken>)(() => new OpenBracketsToken<OpeningBracketOperator>()))
                 .SetName("Open brackets operator token with operator type"),
-            new TestCaseData((Func<IToken>)(() => new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())))
+            new TestCaseData((Func<IToken>)(() => new CloseBracketsToken<ClosingBracketOperator>()))
                 .SetName("Closing brackets operator token with operator type"),
         };
 
@@ -54,14 +54,14 @@ namespace CmdCalculator.Test.Tokenization
             new TestCaseData((Func<IToken>)(() => new LiteralToken("1")),
                 (Func<IToken>)(() => new LiteralToken("2")))
                 .SetName("2 Literal tokens with different numerical value"),
-            new TestCaseData((Func<IToken>)(() => new BinaryMathOpToken<AdditionOperator>(new AdditionOperator())),
-                (Func<IToken>)(() => new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator())))
+            new TestCaseData((Func<IToken>)(() => new BinaryMathOpToken<AdditionOperator>()),
+                (Func<IToken>)(() => new BinaryMathOpToken<SubtractionOperator>()))
                 .SetName("2 Binary math operator tokens with different operator types"),
-            new TestCaseData((Func<IToken>)(() => new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator())),
-                (Func<IToken>)(() => new OpenBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())))
+            new TestCaseData((Func<IToken>)(() => new OpenBracketsToken<OpeningBracketOperator>()),
+                (Func<IToken>)(() => new OpenBracketsToken<ClosingBracketOperator>()))
                 .SetName("2 Open brackets operator tokens with different operator types"),
-            new TestCaseData((Func<IToken>)(() => new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())),
-                (Func<IToken>)(() => new CloseBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator())))
+            new TestCaseData((Func<IToken>)(() => new CloseBracketsToken<ClosingBracketOperator>()),
+                (Func<IToken>)(() => new CloseBracketsToken<OpeningBracketOperator>()))
                 .SetName("2 Closing brackets operator tokens with different operator types"),
         };
     }

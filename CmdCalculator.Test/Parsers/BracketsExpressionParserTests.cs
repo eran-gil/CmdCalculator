@@ -40,9 +40,9 @@ namespace CmdCalculator.Test.Parsers
             //Arrange
             var topParser = A.Fake<ITopExpressionParser>();
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(innerTokens))).Returns(expectedInnerExpression);
-            var tokensList = new List<IToken> { new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()) };
+            var tokensList = new List<IToken> { new OpenBracketsToken<OpeningBracketOperator>() };
             tokensList.AddRange(innerTokens);
-            tokensList.Add(new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()));
+            tokensList.Add(new CloseBracketsToken<ClosingBracketOperator>());
 
             //Act
             var result = _parser.ParseExpression(tokensList, topParser);
@@ -54,54 +54,60 @@ namespace CmdCalculator.Test.Parsers
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
 
+        private static readonly BinaryMathOpToken<AdditionOperator> AdditionToken = new BinaryMathOpToken<AdditionOperator>();
+        private static readonly OpenBracketsToken<OpeningBracketOperator> OpenBracketsToken =
+            new OpenBracketsToken<OpeningBracketOperator>();
+        private static readonly CloseBracketsToken<ClosingBracketOperator> CloseBracketsToken =
+            new CloseBracketsToken<ClosingBracketOperator>();
+
         private static readonly TestCaseData[] InputValidationTestCases = {
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    new OpenBracketsToken<OpeningBracketOperator>(),
                     new LiteralToken("6"),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())
+                    new CloseBracketsToken<ClosingBracketOperator>()
                 }, true)
                 .SetName("Bracketed literal expression can be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    OpenBracketsToken,
                     new LiteralToken("6"),
-                    new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()),
+                    AdditionToken,
                     new LiteralToken("6"),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())
+                    CloseBracketsToken
                 }, true)
                 .SetName("Bracketed binary math op expression can be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    OpenBracketsToken,
+                    OpenBracketsToken,
                     new LiteralToken("6"),
-                    new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()),
+                    AdditionToken,
                     new LiteralToken("6"),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())
+                    CloseBracketsToken,
+                    CloseBracketsToken
                 }, true)
                 .SetName("Nested bracketed binary math op expression can be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())
+                    OpenBracketsToken,
+                    CloseBracketsToken
                 }, false)
                 .SetName("Empty bracketed expression cannot be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    OpenBracketsToken
                 }, false)
                 .SetName("Opening bracket with no closing bracket expression cannot be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()),
+                    CloseBracketsToken
                 }, false)
                 .SetName("Closing bracket with no opening bracket expression cannot be parsed"),
             new TestCaseData(new IToken[]
                 {
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()),
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    CloseBracketsToken,
+                    OpenBracketsToken
                 }, false)
                 .SetName("Closing bracket before opening bracket expression cannot be parsed"),
 
@@ -117,18 +123,18 @@ namespace CmdCalculator.Test.Parsers
             new TestCaseData(new IToken[]
                 {
                     new LiteralToken("6"),
-                    new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()),
+                    AdditionToken,
                     new LiteralToken("6"),
                 },
                 new BinaryOpExpression<AdditionOperator>(new LiteralExpression("6"), new LiteralExpression("6"), 1))
                 .SetName("Bracketed binary math op expression is parsed correctly"),
             new TestCaseData(new IToken[]
                 {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()),
+                    OpenBracketsToken,
                     new LiteralToken("6"),
-                    new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()),
+                    AdditionToken,
                     new LiteralToken("6"),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()),
+                    CloseBracketsToken
                 },
                 new BracketOpExpression(new BinaryOpExpression<AdditionOperator>(new LiteralExpression("6"), new LiteralExpression("6"), 1), 1))
                 .SetName("Nested bracketed binary math op expression is parsed correctly"),

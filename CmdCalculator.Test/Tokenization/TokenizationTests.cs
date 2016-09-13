@@ -45,20 +45,20 @@ namespace CmdCalculator.Test.Tokenization
         private static readonly TestCaseData[] ValidInputTestCases =
         {
             new TestCaseData("", new IToken[] {}).SetName("Empty string returns empty token"),
-            new TestCaseData("+", new IToken[] {new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()), }).SetName("Plus character is parsed to addition token"),
-            new TestCaseData("-", new IToken[] {new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator()), }).SetName("Minus character is parsed to subtraction token"),
-            new TestCaseData("*", new IToken[] {new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator()), }).SetName("Multiply character is parsed to multiplication token"),
-            new TestCaseData("/", new IToken[] {new BinaryMathOpToken<DivisionOperator>(new DivisionOperator()), }).SetName("Divide character is parsed to division token"),
-            new TestCaseData("(", new IToken[] {new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()) }).SetName("Opening bracket character is parsed to opening bracket token"),
-            new TestCaseData(")", new IToken[] {new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator()) }).SetName("Closing bracket character is parsed to closing bracket token"),
+            new TestCaseData("+", new IToken[] {new BinaryMathOpToken<AdditionOperator>(), }).SetName("Plus character is parsed to addition token"),
+            new TestCaseData("-", new IToken[] {new BinaryMathOpToken<SubtractionOperator>(), }).SetName("Minus character is parsed to subtraction token"),
+            new TestCaseData("*", new IToken[] {new BinaryMathOpToken<MultiplicationOperator>(), }).SetName("Multiply character is parsed to multiplication token"),
+            new TestCaseData("/", new IToken[] {new BinaryMathOpToken<DivisionOperator>(), }).SetName("Divide character is parsed to division token"),
+            new TestCaseData("(", new IToken[] {new OpenBracketsToken<OpeningBracketOperator>() }).SetName("Opening bracket character is parsed to opening bracket token"),
+            new TestCaseData(")", new IToken[] {new CloseBracketsToken<ClosingBracketOperator>() }).SetName("Closing bracket character is parsed to closing bracket token"),
             new TestCaseData("1", new IToken[] {new LiteralToken("1") }).SetName("Digit character is parsed to literal token"),
             new TestCaseData("(1+1)",
                 new IToken[] {
-                    new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator()) ,
+                    new OpenBracketsToken<OpeningBracketOperator>() ,
                     new LiteralToken("1"),
-                    new BinaryMathOpToken<AdditionOperator>(new AdditionOperator()),
+                    new BinaryMathOpToken<AdditionOperator>(),
                     new LiteralToken("1"),
-                    new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator())
+                    new CloseBracketsToken<ClosingBracketOperator>()
                 }
             ).SetName("Mathematical expression is parsed correctly in order to correct tokens"),
         };

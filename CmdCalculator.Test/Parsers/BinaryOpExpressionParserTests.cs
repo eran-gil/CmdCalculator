@@ -15,22 +15,22 @@ namespace CmdCalculator.Test.Parsers
     public class BinaryOpExpressionParserTests
     {
         private const int ParserPriority = 1;
-        private static readonly IToken AdditionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
-        private static readonly IToken SubtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
-        private static readonly IToken MultiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
-        private static readonly IToken DivisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
+        private static readonly IToken AdditionToken = new BinaryMathOpToken<AdditionOperator>();
+        private static readonly IToken SubtractionToken = new BinaryMathOpToken<SubtractionOperator>();
+        private static readonly IToken MultiplicationToken = new BinaryMathOpToken<MultiplicationOperator>();
+        private static readonly IToken DivisionToken = new BinaryMathOpToken<DivisionOperator>();
         private static readonly IToken OpenBracketsToken =
-            new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator());
+            new OpenBracketsToken<OpeningBracketOperator>();
         private static readonly IToken CloseBracketsToken =
-            new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator());
-
+            new CloseBracketsToken<ClosingBracketOperator>();
 
         [Test, TestCaseSource(nameof(InputValidationTestCases))]
         public void Binary_Op_Parser_Validates_Input_Correctly<T>(IEnumerable<IToken> input, T operatorType, bool expected)
-            where T : IOperator
+            where T : IOperator, new()
+
         {
             //Arrange
-            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority, operatorType);
+            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
 
             //Act
             var canParse = parser.CanParseExpression(input);
@@ -43,24 +43,21 @@ namespace CmdCalculator.Test.Parsers
         public void Binary_Op_Parser_Passes_Input_Correctly_To_Top_Parser<T>(ICollection<IToken> leftTokens,
             ICollection<IToken> rightTokens,
             T operatorType)
-            where T : IOperator
+            where T : IOperator, new()
         {
             //Arrange
             var topParser = A.Fake<ITopExpressionParser>();
-            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority, operatorType);
+            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(new LiteralExpression("6"));
             var tokensList = new List<IToken>();
             tokensList.AddRange(leftTokens);
-            tokensList.Add(new BinaryMathOpToken<T>(operatorType));
+            tokensList.Add(new BinaryMathOpToken<T>());
             tokensList.AddRange(rightTokens);
 
             //Act
             parser.ParseExpression(tokensList, topParser);
 
             //Assert
-            //            Assert.IsInstanceOf<BinaryOpExpression<T>>(result);
-            //            Assert.AreEqual(expectedLeftExpression, ((BinaryOpExpression<T>)result).FirstOperand);
-            //            Assert.AreEqual(expectedRightExpression, ((BinaryOpExpression<T>)result).SecondOperand);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(leftTokens)))
                 .MustHaveHappened(Repeated.Exactly.Once);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(rightTokens)))
@@ -71,17 +68,17 @@ namespace CmdCalculator.Test.Parsers
         public void Binary_Op_Parser_Uses_Valid_Expressions_From_Top_Parser_Correctly<T>(IExpression leftExpression,
             IExpression rightExpression,
             T operatorType)
-            where T : IOperator
+            where T : IOperator, new()
         {
             //Arrange
             var topParser = A.Fake<ITopExpressionParser>();
-            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority, operatorType);
+            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(OpenBracketsToken))).Returns(leftExpression);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(CloseBracketsToken))).Returns(rightExpression);
             var tokensList = new List<IToken>
             {
                 OpenBracketsToken,
-                new BinaryMathOpToken<T>(operatorType),
+                new BinaryMathOpToken<T>(),
                 CloseBracketsToken
             };
 
@@ -96,17 +93,17 @@ namespace CmdCalculator.Test.Parsers
         [Test, TestCaseSource(nameof(InvalidExpressionInputForParsingCases))]
         public void Binary_Op_Parser_Returns_Null_When_Input_Is_Invalid<T>(IExpression leftExpression,
             IExpression rightExpression, T operatorType)
-            where T : IOperator
+            where T : IOperator, new()
         {
             //Arrange
             var topParser = A.Fake<ITopExpressionParser>();
-            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority, operatorType);
+            var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(OpenBracketsToken))).Returns(leftExpression);
             A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(CloseBracketsToken))).Returns(rightExpression);
             var tokensList = new List<IToken>
             {
                 OpenBracketsToken,
-                new BinaryMathOpToken<T>(operatorType),
+                new BinaryMathOpToken<T>(),
                 CloseBracketsToken
             };
 
@@ -117,34 +114,39 @@ namespace CmdCalculator.Test.Parsers
             Assert.IsNull(result);
         }
 
+        private static readonly AdditionOperator _additionOperator = new AdditionOperator();
+        private static readonly SubtractionOperator _subtractionOperator = new SubtractionOperator();
+        private static readonly MultiplicationOperator _multiplicationOperator = new MultiplicationOperator();
+        private static readonly DivisionOperator _divisionOperator = new DivisionOperator();
+
         private static readonly TestCaseData[] InputValidationTestCases =
         {
             new TestCaseData(new[]
             {
                 AdditionToken
-            }, new AdditionOperator(), true)
+            }, _additionOperator, true)
                 .SetName("Addition operator can be parsed"),
             new TestCaseData(new[]
             {
                 SubtractionToken
-            }, new SubtractionOperator(), true)
+            }, _subtractionOperator, true)
                 .SetName("Subtraction operator can be parsed"),
             new TestCaseData(new[]
             {
                 MultiplicationToken
-            }, new MultiplicationOperator(), true)
+            }, _multiplicationOperator, true)
                 .SetName("Multiplication operator can be parsed"),
             new TestCaseData(new[]
             {
                 DivisionToken
-            }, new DivisionOperator(), true)
+            }, _divisionOperator, true)
                 .SetName("Division operator can be parsed"),
             new TestCaseData(new[]
             {
                 new LiteralToken("6"),
                 AdditionToken,
                 new LiteralToken("6"),
-            }, new AdditionOperator(), true)
+            }, _additionOperator, true)
                 .SetName("Simple addition expression can be parsed"),
             new TestCaseData(new[]
             {
@@ -153,26 +155,26 @@ namespace CmdCalculator.Test.Parsers
                 AdditionToken,
                 new LiteralToken("6"),
                 CloseBracketsToken
-            }, new AdditionOperator(), true)
+            }, _additionOperator, true)
                 .SetName("Bracketed binary op expression can be parsed"),
             new TestCaseData(new[]
             {
                 OpenBracketsToken,
                 new LiteralToken("6"),
                 CloseBracketsToken
-            }, new AdditionOperator(), false)
+            }, _additionOperator, false)
                 .SetName("Basic bracketed expression cannot be parsed"),
             new TestCaseData(new[]
             {
                 new LiteralToken("6"),
-            }, new AdditionOperator(), false)
+            }, _additionOperator, false)
                 .SetName("Simple literal expression cannot be parsed"),
         };
 
         private static readonly TestCaseData[] TokenInputForParsingCases = {
             new TestCaseData(new IToken[]{new LiteralToken("5")},
                     new IToken[] { new LiteralToken("6") },
-                    new AdditionOperator())
+                    _additionOperator)
                 .SetName("Simple binary op expression is parsed correctly"),
             new TestCaseData(
                 new[]{
@@ -188,7 +190,7 @@ namespace CmdCalculator.Test.Parsers
                     AdditionToken,
                     new LiteralToken("6"),
                     CloseBracketsToken },
-                    new MultiplicationOperator())
+                    _multiplicationOperator)
                 .SetName("Nested binary op expression is parsed correctly"),
         };
 
@@ -196,7 +198,7 @@ namespace CmdCalculator.Test.Parsers
             new TestCaseData(
                 new LiteralExpression("6"),
                 new LiteralExpression("6"),
-                new AdditionOperator())
+                _additionOperator)
                 .SetName("Simple binary op expression is parsed correctly"),
             new TestCaseData(
                 new BinaryOpExpression<AdditionOperator>(
@@ -205,7 +207,7 @@ namespace CmdCalculator.Test.Parsers
                 new BinaryOpExpression<AdditionOperator>(
                     new LiteralExpression("6"),
                     new LiteralExpression("6"), 2),
-                new MultiplicationOperator())
+                _multiplicationOperator)
                 .SetName("Nested binary op expression is parsed correctly"),
         };
 
@@ -213,12 +215,12 @@ namespace CmdCalculator.Test.Parsers
             new TestCaseData(
                 new LiteralExpression("6"),
                 null,
-                new AdditionOperator())
+                _additionOperator)
                 .SetName("Right expression cannot be parsed and so is the whole expression"),
             new TestCaseData(
                 null,
                 new LiteralExpression("6"),
-                new AdditionOperator())
+                _additionOperator)
                 .SetName("Left expression cannot be parsed and so is the whole expression"),
             new TestCaseData(
                 new BinaryOpExpression<AdditionOperator>(
@@ -227,7 +229,7 @@ namespace CmdCalculator.Test.Parsers
                 new BinaryOpExpression<AdditionOperator>(
                     new LiteralExpression("6"),
                     new LiteralExpression("6"), ParserPriority),
-                new MultiplicationOperator())
+                _multiplicationOperator)
                 .SetName("Right operand is the same priority as the operand, and thus cannot be parsed this way"),
         };
 

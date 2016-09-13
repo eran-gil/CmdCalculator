@@ -51,11 +51,11 @@ namespace CmdCalculator.Test.Parsers
                 .SetName("Simple literal token can be parsed"),
             new TestCaseData(new IToken[] {}, false)
                 .SetName("Empty token collection cannot be parsed"),
-            new TestCaseData(new IToken[] {new BinaryMathOpToken<AdditionOperator>(new AdditionOperator())}, false)
+            new TestCaseData(new IToken[] {new BinaryMathOpToken<AdditionOperator>()}, false)
                 .SetName("Empty token collection cannot be parsed"),
             new TestCaseData(new[] {new LiteralToken("6"), new LiteralToken("6")}, false)
                 .SetName("Two simple literal tokens cannot be parsed"),
-            new TestCaseData(new IToken[] {new LiteralToken("6"), new BinaryMathOpToken<AdditionOperator>(new AdditionOperator())}, false)
+            new TestCaseData(new IToken[] {new LiteralToken("6"), new BinaryMathOpToken<AdditionOperator>()}, false)
                 .SetName("A literal token with another token cannot be parsed"),
         };
 

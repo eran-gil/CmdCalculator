@@ -9,12 +9,12 @@ namespace CmdCalculator.Tokenization
     {
         public IEnumerable<ITokenParser<char>> Provide()
         {
-            var additionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
-            var subtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
-            var multiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
-            var divisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
-            var openBracketsToken = new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator());
-            var closingBracketsToken = new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator());
+            var additionToken = new BinaryMathOpToken<AdditionOperator>();
+            var subtractionToken = new BinaryMathOpToken<SubtractionOperator>();
+            var multiplicationToken = new BinaryMathOpToken<MultiplicationOperator>();
+            var divisionToken = new BinaryMathOpToken<DivisionOperator>();
+            var openBracketsToken = new OpenBracketsToken<OpeningBracketOperator>();
+            var closingBracketsToken = new CloseBracketsToken<ClosingBracketOperator>();
             return new ITokenParser<char>[]
             {
                 new SpaceTokenParser(),

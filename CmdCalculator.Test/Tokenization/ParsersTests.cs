@@ -54,18 +54,12 @@ namespace CmdCalculator.Test.Tokenization
 
         private void RegisterTokenParsersToContainer(IUnityContainer container)
         {
-            var additionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
-            var subtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
-            var multiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
-            var divisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
-            var openBracketsToken = new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator());
-            var closingBracketsToken = new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator());
-            RegisterOperatorTokenParserToContainer(additionToken, container);
-            RegisterOperatorTokenParserToContainer(subtractionToken, container);
-            RegisterOperatorTokenParserToContainer(multiplicationToken, container);
-            RegisterOperatorTokenParserToContainer(divisionToken, container);
-            RegisterOperatorTokenParserToContainer(openBracketsToken, container);
-            RegisterOperatorTokenParserToContainer(closingBracketsToken, container);
+            RegisterOperatorTokenParserToContainer(AdditionToken, container);
+            RegisterOperatorTokenParserToContainer(SubtractionToken, container);
+            RegisterOperatorTokenParserToContainer(MultiplicationToken, container);
+            RegisterOperatorTokenParserToContainer(DivisionToken, container);
+            RegisterOperatorTokenParserToContainer(OpenBracketsToken, container);
+            RegisterOperatorTokenParserToContainer(CloseBracketsToken, container);
             container.RegisterInstance(new SpaceTokenParser());
             container.RegisterInstance(new NumberTokenParser());
         }
@@ -77,14 +71,14 @@ namespace CmdCalculator.Test.Tokenization
             container.RegisterInstance(parser);
         }
 
-        private static readonly IToken AdditionToken = new BinaryMathOpToken<AdditionOperator>(new AdditionOperator());
-        private static readonly IToken SubtractionToken = new BinaryMathOpToken<SubtractionOperator>(new SubtractionOperator());
-        private static readonly IToken MultiplicationToken = new BinaryMathOpToken<MultiplicationOperator>(new MultiplicationOperator());
-        private static readonly IToken DivisionToken = new BinaryMathOpToken<DivisionOperator>(new DivisionOperator());
-        private static readonly IToken OpenBracketsToken =
-            new OpenBracketsToken<OpeningBracketOperator>(new OpeningBracketOperator());
-        private static readonly IToken CloseBracketsToken =
-            new CloseBracketsToken<ClosingBracketOperator>(new ClosingBracketOperator());
+        private static readonly BinaryMathOpToken<AdditionOperator> AdditionToken = new BinaryMathOpToken<AdditionOperator>();
+        private static readonly BinaryMathOpToken<SubtractionOperator> SubtractionToken = new BinaryMathOpToken<SubtractionOperator>();
+        private static readonly BinaryMathOpToken<MultiplicationOperator> MultiplicationToken = new BinaryMathOpToken<MultiplicationOperator>();
+        private static readonly BinaryMathOpToken<DivisionOperator> DivisionToken = new BinaryMathOpToken<DivisionOperator>();
+        private static readonly OpenBracketsToken<OpeningBracketOperator> OpenBracketsToken =
+            new OpenBracketsToken<OpeningBracketOperator>();
+        private static readonly CloseBracketsToken<ClosingBracketOperator> CloseBracketsToken =
+            new CloseBracketsToken<ClosingBracketOperator>();
 
         private static readonly TestCaseData[] TestCaseDataValidTokenParsersCanReadInput =
         {

@@ -11,13 +11,13 @@ using CmdCalculator.Tokenization.Tokens;
 namespace CmdCalculator.Parsers
 {
     public class BinaryMathOpExpressionParser<TOp> : IExpressionParser
-        where TOp : IOperator
+        where TOp : IOperator, new()
     {
         private readonly IOperatorToken<TOp> _operatorToken;
 
-        public BinaryMathOpExpressionParser(int priority, TOp operatorType)
+        public BinaryMathOpExpressionParser(int priority)
         {
-            _operatorToken = new BinaryMathOpToken<TOp>(operatorType);
+            _operatorToken = new BinaryMathOpToken<TOp>();
             Priority = priority;
         }
 

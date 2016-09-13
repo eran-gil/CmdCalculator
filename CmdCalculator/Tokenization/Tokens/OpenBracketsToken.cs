@@ -4,7 +4,7 @@ using CmdCalculator.Interfaces.Tokens;
 namespace CmdCalculator.Tokenization.Tokens
 {
     public class OpenBracketsToken<TOp> : IOperatorToken<TOp>
-        where TOp : IOperator
+        where TOp : IOperator, new()
     {
         public TOp Op { get; }
 
@@ -13,9 +13,9 @@ namespace CmdCalculator.Tokenization.Tokens
             get { return Op.OpRepresentation; }
         }
 
-        public OpenBracketsToken(TOp op)
+        public OpenBracketsToken()
         {
-            Op = op;
+            Op = new TOp();
         }
 
         public override bool Equals(object obj)
