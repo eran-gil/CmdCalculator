@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Expressions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
@@ -22,10 +21,10 @@ namespace CmdCalculator.Parsers
         public bool CanParseExpression(IEnumerable<IToken> input)
         {
             var inputList = input as IList<IToken> ?? input.ToList();
-            return inputList.Count() > 2 && IsWholeExpressionInBrackets(inputList);
+            return inputList.Count > 2 && IsWholeExpressionInBrackets(inputList);
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser operandParser)
+        public IExpression ParseExpression(ICollection<IToken> input, ITopExpressionParser operandParser)
         {
             var innerExpressionStr = input.Skip(1).ToList();
             innerExpressionStr.RemoveAt(innerExpressionStr.Count - 1);

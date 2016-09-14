@@ -2,7 +2,6 @@
 using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
@@ -29,7 +28,7 @@ namespace CmdCalculator.Parsers
             return input.Contains(_operatorToken);
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser operandParser)
+        public IExpression ParseExpression(ICollection<IToken> input, ITopExpressionParser operandParser)
         {
             var splitLocations = input.GetAllIndexesOf(_operatorToken).ToList();
             splitLocations.Reverse();

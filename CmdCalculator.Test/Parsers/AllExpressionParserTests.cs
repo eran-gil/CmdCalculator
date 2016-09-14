@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
@@ -51,9 +50,9 @@ namespace CmdCalculator.Test.Parsers
             var goodParser = FakeAlwaysYesExpressionParser(1);
             var parsers = new List<IExpressionParser> {badParser, goodParser};
 
-            A.CallTo(() => badParser.ParseExpression(A<IEnumerable<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
+            A.CallTo(() => badParser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
                 .Returns(null);
-            A.CallTo(() => goodParser.ParseExpression(A<IEnumerable<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
+            A.CallTo(() => goodParser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
                 .Returns(_dummyExpression);
 
             var allExpressionParser = new AllExpressionsParser(parsers);
@@ -70,7 +69,7 @@ namespace CmdCalculator.Test.Parsers
         private IExpressionParser FakeDummyExpressionParser(int priority)
         {
             var parser = A.Fake<IExpressionParser>();
-            A.CallTo(() => parser.ParseExpression(A<IEnumerable<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
+            A.CallTo(() => parser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
                 .Returns(_dummyExpression);
             A.CallTo(() => parser.Priority).Returns(priority);
             return parser;
@@ -93,7 +92,7 @@ namespace CmdCalculator.Test.Parsers
 
         private void ValidateCallToParserParseExpression(IExpressionParser parser)
         {
-            A.CallTo(() => parser.ParseExpression(A<IEnumerable<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
+            A.CallTo(() => parser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
 

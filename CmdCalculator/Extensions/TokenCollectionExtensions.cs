@@ -6,7 +6,7 @@ namespace CmdCalculator.Extensions
 {
     public static class TokenCollectionExtensions
     {
-        public static IEnumerable<IToken[]> SplitAtLocation(this IEnumerable<IToken> str, int location)
+        public static IEnumerable<IToken[]> SplitAtLocation(this ICollection<IToken> str, int location)
         {
             var part1 = str.Take(location).ToArray();
             var part2 = str.Skip(location + 1).ToArray();

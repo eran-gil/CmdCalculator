@@ -19,7 +19,7 @@ namespace CmdCalculator.Evaluations
         {
             if (expr == null)
             {
-                throw new ArgumentNullException("expr");
+                throw new ArgumentNullException(nameof(expr));
             }
             IExpressionEvaluator<T> evaluator;
             if (!_evaluatorToType.TryGetValue(expr.GetType(), out evaluator))

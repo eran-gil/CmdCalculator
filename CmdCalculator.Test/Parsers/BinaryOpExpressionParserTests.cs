@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CmdCalculator.Expressions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
@@ -116,39 +115,39 @@ namespace CmdCalculator.Test.Parsers
             Assert.IsNull(result);
         }
 
-        private static readonly AdditionOperator _additionOperator = new AdditionOperator();
-        private static readonly SubtractionOperator _subtractionOperator = new SubtractionOperator();
-        private static readonly MultiplicationOperator _multiplicationOperator = new MultiplicationOperator();
-        private static readonly DivisionOperator _divisionOperator = new DivisionOperator();
+        private static readonly AdditionOperator AdditionOperator = new AdditionOperator();
+        private static readonly SubtractionOperator SubtractionOperator = new SubtractionOperator();
+        private static readonly MultiplicationOperator MultiplicationOperator = new MultiplicationOperator();
+        private static readonly DivisionOperator DivisionOperator = new DivisionOperator();
 
         private static readonly TestCaseData[] InputValidationTestCases =
         {
             new TestCaseData(new[]
             {
                 AdditionToken
-            }, _additionOperator, true)
+            }, AdditionOperator, true)
                 .SetName("Addition operator can be parsed"),
             new TestCaseData(new[]
             {
                 SubtractionToken
-            }, _subtractionOperator, true)
+            }, SubtractionOperator, true)
                 .SetName("Subtraction operator can be parsed"),
             new TestCaseData(new[]
             {
                 MultiplicationToken
-            }, _multiplicationOperator, true)
+            }, MultiplicationOperator, true)
                 .SetName("Multiplication operator can be parsed"),
             new TestCaseData(new[]
             {
                 DivisionToken
-            }, _divisionOperator, true)
+            }, DivisionOperator, true)
                 .SetName("Division operator can be parsed"),
             new TestCaseData(new[]
             {
                 new LiteralToken("6"),
                 AdditionToken,
                 new LiteralToken("6"),
-            }, _additionOperator, true)
+            }, AdditionOperator, true)
                 .SetName("Simple addition expression can be parsed"),
             new TestCaseData(new[]
             {
@@ -157,26 +156,26 @@ namespace CmdCalculator.Test.Parsers
                 AdditionToken,
                 new LiteralToken("6"),
                 CloseBracketsToken
-            }, _additionOperator, true)
+            }, AdditionOperator, true)
                 .SetName("Bracketed binary op expression can be parsed"),
             new TestCaseData(new[]
             {
                 OpenBracketsToken,
                 new LiteralToken("6"),
                 CloseBracketsToken
-            }, _additionOperator, false)
+            }, AdditionOperator, false)
                 .SetName("Basic bracketed expression cannot be parsed"),
             new TestCaseData(new[]
             {
                 new LiteralToken("6"),
-            }, _additionOperator, false)
+            }, AdditionOperator, false)
                 .SetName("Simple literal expression cannot be parsed"),
         };
 
         private static readonly TestCaseData[] TokenInputForParsingCases = {
             new TestCaseData(new IToken[]{new LiteralToken("5")},
                     new IToken[] { new LiteralToken("6") },
-                    _additionOperator)
+                    AdditionOperator)
                 .SetName("Simple binary op expression is parsed correctly"),
             new TestCaseData(
                 new[]{
@@ -192,7 +191,7 @@ namespace CmdCalculator.Test.Parsers
                     AdditionToken,
                     new LiteralToken("6"),
                     CloseBracketsToken },
-                    _multiplicationOperator)
+                    MultiplicationOperator)
                 .SetName("Nested binary op expression is parsed correctly"),
         };
 
@@ -200,7 +199,7 @@ namespace CmdCalculator.Test.Parsers
             new TestCaseData(
                 new LiteralExpression("6"),
                 new LiteralExpression("6"),
-                _additionOperator)
+                AdditionOperator)
                 .SetName("Simple binary op expression is parsed correctly"),
             new TestCaseData(
                 new BinaryOpExpression<AdditionOperator>(
@@ -209,7 +208,7 @@ namespace CmdCalculator.Test.Parsers
                 new BinaryOpExpression<AdditionOperator>(
                     new LiteralExpression("6"),
                     new LiteralExpression("6"), 2),
-                _multiplicationOperator)
+                MultiplicationOperator)
                 .SetName("Nested binary op expression is parsed correctly"),
         };
 
@@ -217,12 +216,12 @@ namespace CmdCalculator.Test.Parsers
             new TestCaseData(
                 new LiteralExpression("6"),
                 null,
-                _additionOperator)
+                AdditionOperator)
                 .SetName("Right expression cannot be parsed and so is the whole expression"),
             new TestCaseData(
                 null,
                 new LiteralExpression("6"),
-                _additionOperator)
+                AdditionOperator)
                 .SetName("Left expression cannot be parsed and so is the whole expression"),
             new TestCaseData(
                 new BinaryOpExpression<AdditionOperator>(
@@ -231,7 +230,7 @@ namespace CmdCalculator.Test.Parsers
                 new BinaryOpExpression<AdditionOperator>(
                     new LiteralExpression("6"),
                     new LiteralExpression("6"), ParserPriority),
-                _multiplicationOperator)
+                MultiplicationOperator)
                 .SetName("Right operand is the same priority as the operand, and thus cannot be parsed this way"),
         };
 

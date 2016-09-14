@@ -25,7 +25,7 @@ namespace CmdCalculator
 
         public TOutput Calculate(TInput input)
         {
-            var tokenizedInput = _inputTokenizer.Tokenize(input);
+            var tokenizedInput = _inputTokenizer.Tokenize(input).ToList();
 
             if (!tokenizedInput.Any())
             {

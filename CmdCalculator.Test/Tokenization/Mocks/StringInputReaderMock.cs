@@ -8,9 +8,9 @@ namespace CmdCalculator.Test.Tokenization.Mocks
         {
         }
 
-        public int Count
+        public new int Position
         {
-            get { return _count; }
+            get { return base.Position; }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Expressions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
@@ -28,7 +27,7 @@ namespace CmdCalculator.Parsers
             return false;
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, ITopExpressionParser innerExpressionParser)
+        public IExpression ParseExpression(ICollection<IToken> input, ITopExpressionParser innerExpressionParser)
         {
             var literalValue = input.Cast<LiteralToken>().First().Value;
             return new LiteralExpression(literalValue);

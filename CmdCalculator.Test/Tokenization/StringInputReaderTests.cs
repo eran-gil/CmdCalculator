@@ -46,7 +46,7 @@ namespace CmdCalculator.Test.Tokenization
         {
             //Arrange
             var inputReader = new StringInputReaderMock(input);
-            var initialCount = inputReader.Count;
+            var initialCount = inputReader.Position;
             var expectedDifference = expected == '\0' ? 0 : 1;
 
             //Act
@@ -54,7 +54,7 @@ namespace CmdCalculator.Test.Tokenization
 
             //Assert
             Assert.AreEqual(expected, peeked);
-            Assert.AreEqual(expectedDifference, inputReader.Count - initialCount);
+            Assert.AreEqual(expectedDifference, inputReader.Position - initialCount);
         }
 
         [Test, TestCaseSource(nameof(ValidPeekingCharsInputs))]
@@ -65,7 +65,7 @@ namespace CmdCalculator.Test.Tokenization
             var length = expectedChars.Length;
             var inputReader = new StringInputReaderMock(input);
             var peekingOutput = new char[length];
-            var initialCount = inputReader.Count;
+            var initialCount = inputReader.Position;
 
             //Act
             var peekedCount = inputReader.Read(peekingOutput, length);
@@ -73,7 +73,7 @@ namespace CmdCalculator.Test.Tokenization
             //Assert
             Assert.AreEqual(expectedChars.ToCharArray(), peekingOutput);
             Assert.AreEqual(expectedCount, peekedCount);
-            Assert.AreEqual(expectedCount, inputReader.Count - initialCount);
+            Assert.AreEqual(expectedCount, inputReader.Position - initialCount);
         }
 
         private static readonly TestCaseData[] ValidPeeking1CharInputs =

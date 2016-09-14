@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CmdCalculator.Exceptions;
+﻿using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;

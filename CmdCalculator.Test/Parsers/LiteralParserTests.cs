@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CmdCalculator.Expressions;
-using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
@@ -35,7 +34,7 @@ namespace CmdCalculator.Test.Parsers
         }
 
         [Test, TestCaseSource(nameof(InputParsingCases))]
-        public void Literal_Parser_Parses_Input_Correctly(IEnumerable<IToken> input, LiteralExpression expected)
+        public void Literal_Parser_Parses_Input_Correctly(ICollection<IToken> input, LiteralExpression expected)
         {
             //Arrange
             var topParser = A.Fake<ITopExpressionParser>();
