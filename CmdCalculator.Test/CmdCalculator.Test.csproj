@@ -63,6 +63,7 @@
     <Compile Include="Evaluators\BracketsEvaluatorTests.cs" />
     <Compile Include="Evaluators\IntegerBinaryOpsTests.cs" />
     <Compile Include="Evaluators\IntegerLiteralEvaluatorTests.cs" />
+    <Compile Include="Extensions\TokenCollectionExtensionsTests.cs" />
     <Compile Include="Parsers\AllExpressionParserTests.cs" />
     <Compile Include="Parsers\BinaryOpExpressionParserTests.cs" />
     <Compile Include="Parsers\BracketsExpressionParserTests.cs" />
