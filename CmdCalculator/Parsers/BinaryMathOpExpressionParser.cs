@@ -2,6 +2,7 @@
 using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
+using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;

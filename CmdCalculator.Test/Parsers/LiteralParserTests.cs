@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using CmdCalculator.Expressions;
+using CmdCalculator.Interfaces;
+using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
 using CmdCalculator.Parsers;
