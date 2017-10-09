@@ -1,7 +1,7 @@
 ﻿using CmdCalculator.Evaluations;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Evaluations;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Evaluators
@@ -16,7 +16,7 @@ namespace CmdCalculator.Test.Evaluators
             const int expectedResult = 6;
             var evaluator = new IntegerLiteralExpressionEvaluator();
             var expression = new LiteralExpression("6");
-            var visitor = A.Dummy<IEvaluationVisitor<int>>();
+            var visitor = Substitute.For<IEvaluationVisitor<int>>();
 
             //Act
             var result = evaluator.Evaluate(expression, visitor);

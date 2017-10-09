@@ -4,7 +4,7 @@ using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Parsers;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Parsers
@@ -17,7 +17,7 @@ namespace CmdCalculator.Test.Parsers
         [SetUp]
         public void SetUpTest()
         {
-            _dummyExpression = A.Dummy<IExpression>();
+            _dummyExpression = Substitute.For<IExpression>();
         }
 
         [Test, TestCaseSource(nameof(CallsToParsersTestCases))]
@@ -29,7 +29,7 @@ namespace CmdCalculator.Test.Parsers
             {
                 var parser = FakeDummyExpressionParser(priority);
                 var shouldParse = (priority == numberOfParsers);
-                A.CallTo(() => parser.CanParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(shouldParse);
+                parser.CanParseExpression(null).ReturnsForAnyArgs(shouldParse);
                 parsers.Add(parser);
             }
             var allExpressionParser = new AllExpressionsParser(parsers);
@@ -49,11 +49,8 @@ namespace CmdCalculator.Test.Parsers
             var badParser = FakeAlwaysYesExpressionParser(1);
             var goodParser = FakeAlwaysYesExpressionParser(1);
             var parsers = new List<IExpressionParser> {badParser, goodParser};
-
-            A.CallTo(() => badParser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
-                .Returns(null);
-            A.CallTo(() => goodParser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
-                .Returns(_dummyExpression);
+            badParser.ParseExpression(null, null).ReturnsForAnyArgs(default(IExpression));
+            goodParser.ParseExpression(null, null).ReturnsForAnyArgs(_dummyExpression);
 
             var allExpressionParser = new AllExpressionsParser(parsers);
 
@@ -68,32 +65,28 @@ namespace CmdCalculator.Test.Parsers
 
         private IExpressionParser FakeDummyExpressionParser(int priority)
         {
-            var parser = A.Fake<IExpressionParser>();
-            A.CallTo(() => parser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
-                .Returns(_dummyExpression);
-            A.CallTo(() => parser.Priority).Returns(priority);
+            var parser = Substitute.For<IExpressionParser>();
+            parser.ParseExpression(null, null).ReturnsForAnyArgs(_dummyExpression);
+            parser.Priority.Returns(priority);
             return parser;
         }
 
         private IExpressionParser FakeAlwaysYesExpressionParser(int priority)
         {
-            var parser = A.Fake<IExpressionParser>();
-            A.CallTo(() => parser.CanParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(true);
-
-            A.CallTo(() => parser.Priority).Returns(priority);
+            var parser = Substitute.For<IExpressionParser>();
+            parser.CanParseExpression(null).ReturnsForAnyArgs(true);
+            parser.Priority.Returns(priority);
             return parser;
         }
 
         private void ValidateCallToParserCanParse(IExpressionParser parser)
         {
-            A.CallTo(() => parser.CanParseExpression(A<IEnumerable<IToken>>.Ignored))
-                .MustHaveHappened(Repeated.Exactly.Once);
+            parser.ReceivedWithAnyArgs(1).CanParseExpression(null);
         }
 
         private void ValidateCallToParserParseExpression(IExpressionParser parser)
         {
-            A.CallTo(() => parser.ParseExpression(A<ICollection<IToken>>.Ignored, A<ITopExpressionParser>.Ignored))
-                .MustHaveHappened(Repeated.Exactly.Once);
+            parser.ReceivedWithAnyArgs(1).ParseExpression(null, null);
         }
 
         private static readonly TestCaseData[] CallsToParsersTestCases = new TestCaseData[]

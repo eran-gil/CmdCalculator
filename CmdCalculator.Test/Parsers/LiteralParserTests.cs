@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using CmdCalculator.Expressions;
+using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
 using CmdCalculator.Parsers;
 using CmdCalculator.Tokenization.Tokens;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Parsers
@@ -37,8 +38,9 @@ namespace CmdCalculator.Test.Parsers
         public void Literal_Parser_Parses_Input_Correctly(ICollection<IToken> input, LiteralExpression expected)
         {
             //Arrange
-            var topParser = A.Fake<ITopExpressionParser>();
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(null);
+            var topParser = Substitute.For<ITopExpressionParser>();
+            topParser.ParseExpression(null).ReturnsForAnyArgs((IExpression) null);
+            
             //Act
             var result = _parser.ParseExpression(input, topParser);
 

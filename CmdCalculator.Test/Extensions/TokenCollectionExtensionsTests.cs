@@ -2,7 +2,7 @@
 using System.Linq;
 using CmdCalculator.Extensions;
 using CmdCalculator.Interfaces.Tokens;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Extensions
@@ -13,8 +13,7 @@ namespace CmdCalculator.Test.Extensions
         public void CollectionIsSplitCorrectly(ICollection<IToken> before, ICollection<IToken> after)
         {
             //Arrange
-            var collection = new List<IToken>(before);
-            collection.Add(A.Dummy<IToken>());
+            var collection = new List<IToken>(before) {Substitute.For<IToken>()};
             collection.AddRange(after);
             var position = before.Count();
 
@@ -39,8 +38,8 @@ namespace CmdCalculator.Test.Extensions
             Assert.AreEqual(expectedIndexes, result);
         }
 
-        private static readonly IToken DummyToken1 = A.Dummy<IToken>();
-        private static readonly IToken DummyToken2 = A.Dummy<IToken>();
+        private static readonly IToken DummyToken1 = Substitute.For<IToken>();
+        private static readonly IToken DummyToken2 = Substitute.For<IToken>();
 
         private static readonly TestCaseData[] CollectionSplitTestCases =
         {

@@ -4,7 +4,7 @@ using CmdCalculator.Interfaces.Evaluations;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Operators;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Evaluators
@@ -27,8 +27,8 @@ namespace CmdCalculator.Test.Evaluators
         [OneTimeSetUp]
         public void SetUpTests()
         {
-            _firstOperandDummy = A.Dummy<IExpression>();
-            _secondOperandDummy = A.Dummy<IExpression>();
+            _firstOperandDummy = Substitute.For<IExpression>();
+            _secondOperandDummy = Substitute.For<IExpression>();
         }
 
         [Test, TestCaseSource(nameof(EvaluatorInputCases))]
@@ -39,9 +39,9 @@ namespace CmdCalculator.Test.Evaluators
             where TOp : IOperator
         {
             //Arrange
-            var visitor = A.Fake<IEvaluationVisitor<int>>();
-            A.CallTo(() => visitor.Visit(A<IExpression>.That.IsEqualTo(_firstOperandDummy))).Returns(firstOperand);
-            A.CallTo(() => visitor.Visit(A<IExpression>.That.IsEqualTo(_secondOperandDummy))).Returns(secondOperand);
+            var visitor = Substitute.For<IEvaluationVisitor<int>>();
+            visitor.Visit(_firstOperandDummy).Returns(firstOperand);
+            visitor.Visit(_secondOperandDummy).Returns(secondOperand);
             var expression = new BinaryOpExpression<TOp>(_firstOperandDummy, _secondOperandDummy, 1);
 
             //Act

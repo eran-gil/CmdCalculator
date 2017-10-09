@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Parsers;
@@ -6,7 +7,7 @@ using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
 using CmdCalculator.Parsers;
 using CmdCalculator.Tokenization.Tokens;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Parsers
@@ -38,8 +39,9 @@ namespace CmdCalculator.Test.Parsers
         public void Brackets_Parser_Parses_Input_Correctly(ICollection<IToken> innerTokens, IExpression expectedInnerExpression)
         {
             //Arrange
-            var topParser = A.Fake<ITopExpressionParser>();
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(innerTokens))).Returns(expectedInnerExpression);
+            var topParser = Substitute.For<ITopExpressionParser>();
+            topParser.ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.SequenceEqual(innerTokens)))
+                .Returns(expectedInnerExpression);
             var tokensList = new List<IToken> { new OpenBracketsToken<OpeningBracketOperator>() };
             tokensList.AddRange(innerTokens);
             tokensList.Add(new CloseBracketsToken<ClosingBracketOperator>());
@@ -50,8 +52,8 @@ namespace CmdCalculator.Test.Parsers
             //Assert
             Assert.IsInstanceOf<BracketOpExpression>(result);
             Assert.AreEqual(expectedInnerExpression, ((BracketOpExpression)result).Operand);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(innerTokens)))
-                .MustHaveHappened(Repeated.Exactly.Once);
+            topParser.Received(1)
+                .ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.SequenceEqual(innerTokens)));
         }
 
         private static readonly BinaryMathOpToken<AdditionOperator> AdditionToken = new BinaryMathOpToken<AdditionOperator>();

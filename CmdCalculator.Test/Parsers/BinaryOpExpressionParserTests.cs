@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Operators;
@@ -7,7 +8,7 @@ using CmdCalculator.Interfaces.Tokens;
 using CmdCalculator.Operators;
 using CmdCalculator.Parsers;
 using CmdCalculator.Tokenization.Tokens;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Parsers
@@ -47,9 +48,9 @@ namespace CmdCalculator.Test.Parsers
             where T : IOperator, new()
         {
             //Arrange
-            var topParser = A.Fake<ITopExpressionParser>();
+            var topParser = Substitute.For<ITopExpressionParser>();
             var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.Ignored)).Returns(new LiteralExpression("6"));
+            topParser.ParseExpression(null).ReturnsForAnyArgs(new LiteralExpression("6"));
             var tokensList = new List<IToken>();
             tokensList.AddRange(leftTokens);
             tokensList.Add(new BinaryMathOpToken<T>());
@@ -59,10 +60,8 @@ namespace CmdCalculator.Test.Parsers
             parser.ParseExpression(tokensList, topParser);
 
             //Assert
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(leftTokens)))
-                .MustHaveHappened(Repeated.Exactly.Once);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.IsSameSequenceAs(rightTokens)))
-                .MustHaveHappened(Repeated.Exactly.Once);
+            topParser.Received(1).ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.SequenceEqual(leftTokens)));
+            topParser.Received(1).ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.SequenceEqual(rightTokens)));
         }
 
         [Test, TestCaseSource(nameof(ExpresionInputForParsingCases))]
@@ -72,10 +71,10 @@ namespace CmdCalculator.Test.Parsers
             where T : IOperator, new()
         {
             //Arrange
-            var topParser = A.Fake<ITopExpressionParser>();
+            var topParser = Substitute.For<ITopExpressionParser>();
             var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(OpenBracketsToken))).Returns(leftExpression);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(CloseBracketsToken))).Returns(rightExpression);
+            topParser.ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.Contains(OpenBracketsToken))).Returns(leftExpression);
+            topParser.ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.Contains(CloseBracketsToken))).Returns(rightExpression);
             var tokensList = new List<IToken>
             {
                 OpenBracketsToken,
@@ -97,10 +96,10 @@ namespace CmdCalculator.Test.Parsers
             where T : IOperator, new()
         {
             //Arrange
-            var topParser = A.Fake<ITopExpressionParser>();
+            var topParser = Substitute.For<ITopExpressionParser>();
             var parser = new BinaryMathOpExpressionParser<T>(ParserPriority);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(OpenBracketsToken))).Returns(leftExpression);
-            A.CallTo(() => topParser.ParseExpression(A<IEnumerable<IToken>>.That.Contains(CloseBracketsToken))).Returns(rightExpression);
+            topParser.ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.Contains(OpenBracketsToken))).Returns(leftExpression);
+            topParser.ParseExpression(Arg.Is<IEnumerable<IToken>>(tokens => tokens.Contains(CloseBracketsToken))).Returns(rightExpression);
             var tokensList = new List<IToken>
             {
                 OpenBracketsToken,

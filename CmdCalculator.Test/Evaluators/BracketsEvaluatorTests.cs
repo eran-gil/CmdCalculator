@@ -2,7 +2,7 @@
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Evaluations;
 using CmdCalculator.Interfaces.Expressions;
-using FakeItEasy;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace CmdCalculator.Test.Evaluators
@@ -16,7 +16,7 @@ namespace CmdCalculator.Test.Evaluators
         [OneTimeSetUp]
         public void SetUpTest()
         {
-            _dummyExpression = A.Dummy<IExpression>();
+            _dummyExpression = Substitute.For<IExpression>();
             _evaluator = new BracketsEvaluator<int>();
         }
 
@@ -25,16 +25,15 @@ namespace CmdCalculator.Test.Evaluators
         {
             //Arrange
             const int expectedResult = 6;
-            var visitor = A.Fake<IEvaluationVisitor<int>>();
-            A.CallTo(() => visitor.Visit(A<IExpression>.That.IsEqualTo(_dummyExpression))).Returns(expectedResult);
+            var visitor = Substitute.For<IEvaluationVisitor<int>>();//A.Fake<IEvaluationVisitor<int>>());
+            visitor.Visit(_dummyExpression).Returns(expectedResult);
             var expression = new BracketOpExpression(_dummyExpression, 1);
 
             //Act
             var result = _evaluator.Evaluate(expression, visitor);
 
             //Assert
-            A.CallTo(() => visitor.Visit(A<IExpression>.That.IsEqualTo(_dummyExpression)))
-                .MustHaveHappened(Repeated.Exactly.Once);
+            visitor.Received(1).Visit(_dummyExpression);
             Assert.AreEqual(expectedResult, result);
         }
 
