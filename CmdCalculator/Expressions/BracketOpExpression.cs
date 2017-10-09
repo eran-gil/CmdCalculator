@@ -16,7 +16,7 @@ namespace CmdCalculator.Expressions
 
         public override string ToString()
         {
-            return "(" + Operand.ToString() + ")";
+            return "(" + Operand + ")";
         }
     }
 }

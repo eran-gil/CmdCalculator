@@ -3,7 +3,7 @@ using CmdCalculator.Interfaces.Evaluations;
 
 namespace CmdCalculator.Evaluations
 {
-    class IntegerEvaluatorProvider : IExpressionEvaluatorProvider<int>
+    public class IntegerEvaluatorProvider : IExpressionEvaluatorProvider<int>
     {
         public IEnumerable<IExpressionEvaluator<int>> Provide()
         {
@@ -14,7 +14,7 @@ namespace CmdCalculator.Evaluations
                 new IntegerSubstractionEvaluator(),
                 new IntegerMultiplicationEvaluator(),
                 new IntegerDivisionEvaluator(),
-                new IntegerExpressionEvaluator()
+                new IntegerLiteralExpressionEvaluator()
             };
         }
     }

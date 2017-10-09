@@ -1,7 +1,9 @@
-﻿namespace CmdCalculator.Interfaces.Tokens
+﻿using System.Collections.Generic;
+
+namespace CmdCalculator.Interfaces.Tokens
 {
     public interface ITokenizer<in T>
     {
-        IToken[] Tokenize(T input);
+        IEnumerable<IToken> Tokenize(T input);
     }
 }

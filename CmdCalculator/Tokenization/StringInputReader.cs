@@ -2,15 +2,15 @@
 
 namespace CmdCalculator.Tokenization
 {
-    class StringInputReader : IInputReader<char>
+    public class StringInputReader : IInputReader<char>
     {
         private readonly string _str;
-        private int _count;
+        protected int Position;
 
         public StringInputReader(string str)
         {
             _str = str;
-            _count = 0;
+            Position = 0;
         }
 
         public char EmptyValue
@@ -22,16 +22,18 @@ namespace CmdCalculator.Tokenization
         {
             var limit = GetReadLimit(1);
             if (limit == 0)
+            {
                 return EmptyValue;
-            return _str[_count];
+            }
+            return _str[Position];
         }
 
         public int Peek(char[] buffer, int numOfCharsToRead)
         {
             var limit = GetReadLimit(numOfCharsToRead);
-            for (int i = 0; i < limit; i++)
+            for (var i = 0; i < limit; i++)
             {
-                buffer[i] = _str[_count + i];
+                buffer[i] = _str[Position + i];
             }
             return limit;
         }
@@ -41,7 +43,7 @@ namespace CmdCalculator.Tokenization
             var value = Peek();
             if (value != EmptyValue)
             {
-                _count++;
+                Position++;
             }
             return value;
         }
@@ -49,13 +51,13 @@ namespace CmdCalculator.Tokenization
         public int Read(char[] buffer, int numOfCharsToRead)
         {
             var value = Peek(buffer, numOfCharsToRead);
-            _count += value;
+            Position += value;
             return value;
         }
 
         private int GetReadLimit(int numOfCharsToRead)
         {
-            var availibleChars = _str.Length - _count;
+            var availibleChars = _str.Length - Position;
             if (availibleChars < numOfCharsToRead)
             {
                 return availibleChars;

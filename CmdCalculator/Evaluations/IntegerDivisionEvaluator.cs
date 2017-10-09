@@ -1,9 +1,10 @@
-﻿using CmdCalculator.Tokenization.Tokens;
+﻿using CmdCalculator.Operators;
 
 namespace CmdCalculator.Evaluations
 {
-    class IntegerDivisionEvaluator : BinaryExpressionEvaluatorBase<DivisionToken, int>
+    public class IntegerDivisionEvaluator : BinaryExpressionEvaluatorBase<DivisionOperator, int>
     {
+
         protected override int Evaluate(int left, int right)
         {
             return left / right;

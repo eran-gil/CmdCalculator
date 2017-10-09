@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CmdCalculator.Interfaces.Expressions;
 using CmdCalculator.Interfaces.Tokens;
 
@@ -9,7 +8,8 @@ namespace CmdCalculator.Interfaces.Parsers
     {
         bool CanParseExpression(IEnumerable<IToken> input);
 
-        IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> innerExpressionParser);
         int Priority { get; }
+
+        IExpression ParseExpression(ICollection<IToken> input, ITopExpressionParser topExpressionParser);
     }
 }

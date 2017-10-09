@@ -2,7 +2,7 @@
 
 namespace CmdCalculator.Tokenization
 {
-    class StringInputReaderFactory : IInputReaderFactory<string, char>
+    public class StringInputReaderFactory : IInputReaderFactory<string, char>
     {
         public IInputReader<char> Create(string input)
         {

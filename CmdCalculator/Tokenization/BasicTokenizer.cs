@@ -18,7 +18,7 @@ namespace CmdCalculator.Tokenization
             _parsers = parsers.ToList();
         }
 
-        public IToken[] Tokenize(TInput input)
+        public IEnumerable<IToken> Tokenize(TInput input)
         {
             var tokens = new List<IToken>();
             var inputReader = _readerFactory.Create(input);

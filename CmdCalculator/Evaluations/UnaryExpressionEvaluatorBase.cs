@@ -15,10 +15,10 @@ namespace CmdCalculator.Evaluations
         public virtual TRes Evaluate(IExpression expr, IEvaluationVisitor<TRes> visitor)
         {
             var expression = (TOp)expr;
-            var innerExpression = visitor.Visit(expression.Operand);
-            return Evaluate(innerExpression);
+            var operand = visitor.Visit(expression.Operand);
+            return Evaluate(operand);
         }
 
-        protected abstract TRes Evaluate(TRes innerExpression);
+        protected abstract TRes Evaluate(TRes operand);
     }
 }

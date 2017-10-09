@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CmdCalculator.Exceptions;
 using CmdCalculator.Interfaces;
 using CmdCalculator.Interfaces.Evaluations;
@@ -10,7 +11,7 @@ namespace CmdCalculator
 {
     public class BasicCalculator<TInput, TOutput> : ICalculator<TInput, TOutput>
     {
-        private readonly IExpressionParser _expressionParser;
+        private readonly ITopExpressionParser _expressionParser;
         private readonly ITokenizer<TInput> _inputTokenizer;
         private readonly IEvaluationVisitor<TOutput> _visitor;
 
@@ -24,8 +25,14 @@ namespace CmdCalculator
 
         public TOutput Calculate(TInput input)
         {
-            var tokenizedInput = _inputTokenizer.Tokenize(input);
-            var topExpression = _expressionParser.ParseExpression(tokenizedInput, null);
+            var tokenizedInput = _inputTokenizer.Tokenize(input).ToList();
+
+            if (!tokenizedInput.Any())
+            {
+                return default(TOutput);
+            }
+
+            var topExpression = _expressionParser.ParseExpression(tokenizedInput);
             if (topExpression == null)
             {
                 var message = string.Format("The expression \"{0}\" could not be parsed. Please try again.", input);

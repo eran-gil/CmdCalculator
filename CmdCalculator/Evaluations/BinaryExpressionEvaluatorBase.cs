@@ -2,12 +2,12 @@
 using CmdCalculator.Expressions;
 using CmdCalculator.Interfaces.Evaluations;
 using CmdCalculator.Interfaces.Expressions;
-using CmdCalculator.Interfaces.Tokens;
+using CmdCalculator.Interfaces.Operators;
 
 namespace CmdCalculator.Evaluations
 {
     public abstract class BinaryExpressionEvaluatorBase<TOp, TRes> : IExpressionEvaluator<TRes>
-        where TOp : IToken
+        where TOp : IOperator
     {
         public virtual Type GetSupportedExpressionType()
         {

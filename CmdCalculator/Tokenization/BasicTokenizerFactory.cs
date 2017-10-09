@@ -3,7 +3,7 @@ using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Tokenization
 {
-    class BasicTokenizerFactory<TInput, TParserOutput> : ITokenizerFactory<TInput>
+    public class BasicTokenizerFactory<TInput, TParserOutput> : ITokenizerFactory<TInput>
         where TParserOutput : IEquatable<TParserOutput>
     {
         private readonly IInputReaderFactory<TInput, TParserOutput> _inputReaderFactory;

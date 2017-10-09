@@ -1,8 +1,8 @@
-﻿using CmdCalculator.Tokenization.Tokens;
+﻿using CmdCalculator.Operators;
 
 namespace CmdCalculator.Evaluations
 {
-    class IntegerMultiplicationEvaluator : BinaryExpressionEvaluatorBase<MultiplicationToken, int>
+    public class IntegerMultiplicationEvaluator : BinaryExpressionEvaluatorBase<MultiplicationOperator, int>
     {
         protected override int Evaluate(int left, int right)
         {

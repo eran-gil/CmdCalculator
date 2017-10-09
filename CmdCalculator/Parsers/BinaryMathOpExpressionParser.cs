@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CmdCalculator.Expressions;
 using CmdCalculator.Extensions;
 using CmdCalculator.Interfaces.Expressions;
+using CmdCalculator.Interfaces.Operators;
 using CmdCalculator.Interfaces.Parsers;
 using CmdCalculator.Interfaces.Tokens;
+using CmdCalculator.Tokenization.Tokens;
 
 namespace CmdCalculator.Parsers
 {
-    public class BinaryMathOpExpressionParser<T> : IExpressionParser
-        where T : IToken
+    public class BinaryMathOpExpressionParser<TOp> : IExpressionParser
+        where TOp : IOperator, new()
     {
+        private readonly IOperatorToken<TOp> _operatorToken;
 
         public BinaryMathOpExpressionParser(int priority)
         {
+            _operatorToken = new BinaryMathOpToken<TOp>();
             Priority = priority;
         }
 
@@ -22,12 +25,12 @@ namespace CmdCalculator.Parsers
 
         public bool CanParseExpression(IEnumerable<IToken> input)
         {
-            return input.OfType<T>().Any();
+            return input.Contains(_operatorToken);
         }
 
-        public IExpression ParseExpression(IEnumerable<IToken> input, Func<IEnumerable<IToken>, IExpression> operandParser)
+        public IExpression ParseExpression(ICollection<IToken> input, ITopExpressionParser operandParser)
         {
-            var splitLocations = input.GetAllIndexesOf<T>().ToList();
+            var splitLocations = input.GetAllIndexesOf(_operatorToken).ToList();
             splitLocations.Reverse();
             IExpression expression = null;
 
@@ -45,18 +48,18 @@ namespace CmdCalculator.Parsers
         }
 
         private IBinaryOpExpression GetExpressionForParts(IEnumerable<IEnumerable<IToken>> splittedInput,
-            Func<IEnumerable<IToken>, IExpression> operandParser)
+            ITopExpressionParser operandParser)
         {
             var splittedInputArr = splittedInput.ToArray();
-            var firstOperand = operandParser(splittedInputArr[0]);
-            var secondOperand = operandParser(splittedInputArr[1]);
+            var firstOperand = operandParser.ParseExpression(splittedInputArr[0]);
+            var secondOperand = operandParser.ParseExpression(splittedInputArr[1]);
 
             if (firstOperand == null || secondOperand == null || !IsParsedInCorrectOrder(secondOperand))
             {
                 return null;
             }
 
-            var expression = new BinaryOpExpression<T>(firstOperand, secondOperand, Priority);
+            var expression = new BinaryOpExpression<TOp>(firstOperand, secondOperand, Priority);
             return expression;
         }
 

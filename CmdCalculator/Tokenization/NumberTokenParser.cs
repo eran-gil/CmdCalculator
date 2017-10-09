@@ -4,7 +4,7 @@ using CmdCalculator.Tokenization.Tokens;
 
 namespace CmdCalculator.Tokenization
 {
-    class NumberTokenParser : ITokenParser<char>
+    public class NumberTokenParser : ITokenParser<char>
     {
         public bool CanRead(IInputPeeker<char> peeker)
         {

@@ -1,28 +1,32 @@
-﻿using CmdCalculator.Interfaces.Tokens;
+﻿using CmdCalculator.Interfaces.Operators;
+using CmdCalculator.Interfaces.Tokens;
 
 namespace CmdCalculator.Tokenization
 {
-    class OperatorTokenParser<TOperator> : ITokenParser<char>
-        where TOperator : IToken, new()
+    public class OperatorTokenParser<TOp> : ITokenParser<char>
+        where TOp : IOperator
     {
-        private readonly string _operator;
+        private readonly IOperatorToken<TOp> _operatorToken;
 
-        public OperatorTokenParser(string op)
+        public OperatorTokenParser(IOperatorToken<TOp> operatorToken)
         {
-            _operator = op;
+            _operatorToken = operatorToken;
         }
+
         public bool CanRead(IInputPeeker<char> peeker)
         {
-            var buffer = new char[_operator.Length];
+            var opRepresentation = _operatorToken.OpRepresentation;
+            var buffer = new char[opRepresentation.Length];
             var len = peeker.Peek(buffer, buffer.Length);
-            return _operator.Equals(new string(buffer, 0, len));
+            return opRepresentation.Equals(new string(buffer, 0, len));
         }
 
         public IToken ReadToken(IInputReader<char> reader)
         {
-            var buffer = new char[_operator.Length];
+            var opRepresentation = _operatorToken.OpRepresentation;
+            var buffer = new char[opRepresentation.Length];
             reader.Read(buffer, buffer.Length);
-            return new TOperator();
+            return _operatorToken;
         }
     }
 }
